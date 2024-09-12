@@ -19,8 +19,6 @@ module.exports = {
 
   // Configure Jest to look for test files
   testMatch: [
-    // Any files inside __tests__ folders
-    '**/__tests__/**/*.js',
     // Any files with .test.js or .spec.js
     '**/?(*.)+(spec|test).js',
   ],
