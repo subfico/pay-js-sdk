@@ -3,7 +3,7 @@
  */
 const { waitFor } = require("@testing-library/dom")
 
-describe('Payment Form Integration', () => {
+describe("Payment Form Integration", () => {
   let createPaymentForm, showLoader, hideLoader;
 
   // Mock the DOM environment before each test
@@ -16,7 +16,8 @@ describe('Payment Form Integration', () => {
     console.error = jest.fn();
 
     // Require the code under test (which will attach the createPaymentForm to window)
-    const script = require('./index.js'); // Replace with the correct path
+    // Replace with the correct path
+    const script = require("./index.js");
 
     // Pull out the exposed createPaymentForm function from window
     createPaymentForm = window.createPaymentForm;
@@ -24,54 +25,54 @@ describe('Payment Form Integration', () => {
 
   afterEach(() => {
     // Clean up the document after each test
-    document.body.innerHTML = '';
+    document.body.innerHTML = "";
   });
 
 
-  test('should handle missing container element and log error', () => {
-    const iframeUrl = 'https://example.com';
-    const config = { publicKey: 'test-public-key' };
+  it("should handle missing container element and log error", () => {
+    const iframeUrl = "https://example.com";
+    const config = { publicKey: "test-public-key" };
 
     // Call createPaymentForm with an invalid container ID
-    createPaymentForm(iframeUrl, 'invalid-container', config);
+    createPaymentForm(iframeUrl, "invalid-container", config);
 
-    // Ensure that console.error is called
-    expect(console.error).toHaveBeenCalledWith('Container element not found');
+    // Check that console.error is called
+    expect(console.error).toHaveBeenCalledWith("Container element not found");
   });
 
-  test('should create an iframe with the correct attributes and append it to the container', () => {
-    const iframeUrl = 'https://example.com';
-    const config = { publicKey: 'test-public-key' };
+  it("should create an iframe with the correct attributes and append it to the container", () => {
+    const iframeUrl = "https://example.com";
+    const config = { publicKey: "test-public-key" };
   
     // Call createPaymentForm
-    createPaymentForm(iframeUrl, 'payment-container', config);
+    createPaymentForm(iframeUrl, "payment-container", config);
   
     // Check if the iframe was created and has the correct attributes
-    const iframe = document.getElementById('payment-form-iframe');
+    const iframe = document.getElementById("payment-form-iframe");
     expect(iframe).not.toBeNull();
   
     // Normalize the URL by trimming any trailing slashes before comparison
-    const expectedUrl = `${iframeUrl.replace(/\/$/, '')}/?publicKey=test-public-key`;
+    const expectedUrl = `${iframeUrl.replace(/\/$/, "")}/?publicKey=test-public-key`;
   
     expect(iframe.src).toBe(expectedUrl);
-    expect(iframe.width).toBe('100%');
-    expect(iframe.height).toBe('500px');
+    expect(iframe.width).toBe("100%");
+    expect(iframe.height).toBe("500px");
     expect(iframe.style.border).toBe("");
     expect(iframe.style.display).toBe("none");
   });
 
-  test('should securely post the publicKey to the iframe after it loads', async () => {
-    const iframeUrl = 'https://example.com';
-    const config = { publicKey: 'test-public-key' };
+  it("should securely post the publicKey to the iframe after it loads", async () => {
+    const iframeUrl = "https://example.com";
+    const config = { publicKey: "test-public-key" };
   
     // Call createPaymentForm
-    createPaymentForm(iframeUrl, 'payment-container', config);
+    createPaymentForm(iframeUrl, "payment-container", config);
   
     // Get the iframe from the DOM
-    const iframe = document.getElementById('payment-form-iframe');
+    const iframe = document.getElementById("payment-form-iframe");
   
     // Mock the iframe's contentWindow by using Object.defineProperty
-    Object.defineProperty(iframe, 'contentWindow', {
+    Object.defineProperty(iframe, "contentWindow", {
       value: {
         postMessage: jest.fn(),
       },
@@ -79,25 +80,25 @@ describe('Payment Form Integration', () => {
     });
   
     // Trigger the iframe's load event
-    const loadEvent = new Event('load');
+    const loadEvent = new Event("load");
     iframe.dispatchEvent(loadEvent);
   
     // Wait for the postMessage to be called
     await waitFor(() => {
       expect(iframe.contentWindow.postMessage).toHaveBeenCalledWith(
-        { publicKey: 'test-public-key' },
+        { publicKey: "test-public-key" },
         iframeUrl
       );
     });
   });
 
-  test('should submit the form when receiving "submitForm" message', () => {
+  it("should submit the form when receiving 'submitForm' message", () => {
     // Mock form submission
-    const form = document.getElementById('paymentForm');
+    const form = document.getElementById("paymentForm");
     form.submit = jest.fn();
 
     // Simulate receiving the "submitForm" message
-    const event = new MessageEvent('message', { data: 'submitForm' });
+    const event = new MessageEvent("message", { data: "submitForm" });
     window.dispatchEvent(event);
 
     // Check if form.submit was called
