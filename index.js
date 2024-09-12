@@ -1,8 +1,8 @@
 (function (window, document) {
   // Listen for messages from the parent
-  window.addEventListener('message', function (event) {
-    if (event.data === 'submitForm') {
-      var form = document.getElementById('paymentForm');
+  window.addEventListener("message", function (event) {
+    if (event.data === "submitForm") {
+      var form = document.getElementById("paymentForm");
       if (form) {
         form.submit();
       }
@@ -11,8 +11,8 @@
 
   // Function to show the loader with a spinning effect
   function showLoader(container) {
-    var loader = document.createElement('div');
-    loader.id = 'loading-spinner';
+    var loader = document.createElement("div");
+    loader.id = "loading-spinner";
     
     // CSS spinner
     loader.innerHTML = `
@@ -29,7 +29,7 @@
     `;
 
     // Add CSS animation for spinning
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = `
       @keyframes spin {
         to { transform: rotate(360deg); }
@@ -42,7 +42,7 @@
 
   // Function to hide the loader
   function hideLoader() {
-    var loader = document.getElementById('loading-spinner');
+    var loader = document.getElementById("loading-spinner");
     if (loader) {
       loader.remove();
     }
@@ -52,7 +52,7 @@
   function createPaymentForm(iframeUrl, containerId, config) {
     var container = document.getElementById(containerId);
     if (!container) {
-      console.error('Container element not found');
+      console.error("Container element not found");
       return;
     }
 
@@ -60,7 +60,7 @@
     showLoader(container);
 
     // Create the iframe element and initially hide it
-    var iframe = document.createElement('iframe');
+    var iframe = document.createElement("iframe");
     iframe.src = iframeUrl + `?publicKey=${encodeURIComponent(config.publicKey)}`;
     iframe.width = "100%";
     // Adjust the height as needed
