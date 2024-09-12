@@ -62,12 +62,12 @@
     // Create the iframe element and initially hide it
     var iframe = document.createElement('iframe');
     iframe.src = iframeUrl + `?publicKey=${encodeURIComponent(config.publicKey)}`;
-    iframe.width = '100%';
+    iframe.width = "100%";
     // Adjust the height as needed
-    iframe.height = '500px';
-    iframe.style.border = 'none';
+    iframe.height = "500px";
+    iframe.style.border = "none";
     // Initially hide the iframe
-    iframe.style.display = 'none';
+    iframe.style.display = "none";
     iframe.id = "payment-form-iframe";
     iframe.publicKey = config.publicKey;
 
