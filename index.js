@@ -80,7 +80,7 @@
       hideLoader();
 
       // Show the iframe content after hiding the loader
-      iframe.style.display = 'block';
+      iframe.style.display = "block";
 
       const publicKey = config.publicKey;
       const iframeWindow = iframe.contentWindow;
