@@ -59,48 +59,4 @@ describe("Payment Form Integration", () => {
     expect(iframe.style.border).toBe("");
     expect(iframe.style.display).toBe("none");
   });
-
-  // it("should securely post the publicKey to the iframe after it loads", async () => {
-  //   const iframeUrl = "https://example.com/";
-  //   const config = { publicKey: "test-public-key" };
-  
-  //   // Call createSubfiEmbed
-  //   createSubfiEmbed(iframeUrl, "payment-container", config);
-  
-  //   // Get the iframe from the DOM
-  //   const iframe = document.getElementById("subfi-embed");
-  
-  //   // Mock the iframe's contentWindow by using Object.defineProperty
-  //   Object.defineProperty(iframe, "contentWindow", {
-  //     value: {
-  //       postMessage: jest.fn(),
-  //     },
-  //     writable: true,
-  //   });
-  
-  //   // Trigger the iframe's load event
-  //   const loadEvent = new Event("load");
-  //   iframe.dispatchEvent(loadEvent);
-  
-  //   // Wait for the postMessage to be called
-  //   await waitFor(() => {
-  //     expect(iframe.contentWindow.postMessage).toHaveBeenCalledWith(
-  //       { publicKey: "test-public-key" },
-  //       iframeUrl
-  //     );
-  //   });
-  // });
-
-  // it("should submit the form when receiving 'submitForm' message", () => {
-  //   // Mock form submission
-  //   const form = document.getElementById("subfi-embed");
-  //   form.submit = jest.fn();
-
-  //   // Simulate receiving the "submitForm" message
-  //   const event = new MessageEvent("message", { data: "submitForm" });
-  //   window.dispatchEvent(event);
-
-  //   // Check if form.submit was called
-  //   expect(form.submit).toHaveBeenCalled();
-  // });
 });
