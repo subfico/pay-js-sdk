@@ -1,97 +1,102 @@
 (function (window, document) {
-  // Listen for messages from the parent
+  // Listen for messages from the iframe
   window.addEventListener("message", function (event) {
-    if (event.data === "submitForm") {
-      var form = document.getElementById("paymentForm");
-      if (form) {
-        form.submit();
+    const { eventType, data } = event.data;
+
+    if (eventType === "submitFormResponse") {
+      // Log or handle the form submission response
+      console.log("Received response from iframe:", data);
+      if (window.onFormSubmitResponse) {
+        // Callback function to handle response
+        window.onFormSubmitResponse(data);
       }
     }
   });
 
-  // Function to show the loader with a spinning effect
+  // Function to create and load the iframe
+  function createSubfiEmbed(iframeUrl, containerId, config) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error("Container element not found");
+      return;
+    }
+
+    // Show loader while iframe is loading
+    showLoader(container);
+
+    const iframe = document.createElement("iframe");
+
+    iframe.src = iframeUrl;
+    iframe.width = "100%";
+    iframe.height = "500px";
+    iframe.style.border = "none";
+    iframe.style.display = "none";
+    iframe.id = "subfi-embed";
+    iframe.allow = "payment";
+
+    container.appendChild(iframe);
+
+    iframe.onload = function () {
+      // Hide loader when iframe is loaded
+      hideLoader();
+      iframe.style.display = "block";
+
+      const iframeWindow = iframe.contentWindow;
+      if (iframeWindow) {
+        setTimeout(() => {
+          iframeWindow.postMessage({ eventType: "sendConfigCommand", data: config }, "*");
+        }, 100);
+      }
+    };
+  }
+
+  // Exportable submit handler function
+  function submitHandler() {
+    const iframe = document.getElementById("subfi-embed");
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ eventType: "submitForm" }, "*");
+    } else {
+      console.error("Iframe not found or not loaded");
+    }
+  }
+
+  // Show the loader
   function showLoader(container) {
-    var loader = document.createElement("div");
+    const loader = document.createElement("div");
     loader.id = "loading-spinner";
-    
-    // CSS spinner
     loader.innerHTML = `
       <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
         <div class="spinner" style="
           width: 50px;
           height: 50px;
           border: 6px solid rgba(0, 0, 0, 0.1);
-          border-top-color: #3498db;
+          border-top-color: #58E8B5;
           border-radius: 50%;
           animation: spin 1s ease-in-out infinite;
         "></div>
       </div>
     `;
-
-    // Add CSS animation for spinning
+    // Create and append the loader to the container
     const style = document.createElement("style");
     style.innerHTML = `
       @keyframes spin {
         to { transform: rotate(360deg); }
       }
     `;
+    // Append the style to the document head
     document.head.appendChild(style);
-
+    // Append the loader to the container
     container.appendChild(loader);
   }
 
-  // Function to hide the loader
+  // Hide the loader
   function hideLoader() {
-    var loader = document.getElementById("loading-spinner");
-    if (loader) {
-      loader.remove();
-    }
+    const loader = document.getElementById("loading-spinner");
+    if (loader) loader.remove();
   }
 
-  // Function to create and load the iframe
-  function createPaymentForm(iframeUrl, containerId, config) {
-    var container = document.getElementById(containerId);
-    if (!container) {
-      console.error("Container element not found");
-      return;
-    }
-
-    // Show the loader
-    showLoader(container);
-
-    // Create the iframe element and initially hide it
-    var iframe = document.createElement("iframe");
-    iframe.src = iframeUrl + `?publicKey=${encodeURIComponent(config.publicKey)}`;
-    iframe.width = "100%";
-    // Adjust the height as needed
-    iframe.height = "500px";
-    iframe.style.border = "none";
-    // Initially hide the iframe
-    iframe.style.display = "none";
-    iframe.id = "payment-form-iframe";
-    iframe.publicKey = config.publicKey;
-
-    // Append the iframe to the container
-    container.appendChild(iframe);
-
-    // When iframe is loaded, then hide the loader and show the iframe
-    iframe.onload = function () {
-      // Hide the loader
-      hideLoader();
-
-      // Show the iframe content after hiding the loader
-      iframe.style.display = "block";
-
-      const publicKey = config.publicKey;
-      const iframeWindow = iframe.contentWindow;
-
-      if (iframeWindow) {
-        // Pass the publicKey securely
-        iframeWindow.postMessage({ publicKey }, iframeUrl);
-      }
-    };
-  }
-
-  // Expose the function to the global object
-  window.createPaymentForm = createPaymentForm;
+  // Expose functions globally
+  window.createSubfiEmbed = createSubfiEmbed;
+  // Expose the submit handler
+  window.submitSubfiEmbedHandler = submitHandler;
 })(window, document);
