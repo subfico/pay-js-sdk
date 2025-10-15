@@ -1,1 +1,18 @@
+.DS_Store
 node_modules/
+
+# Environment variables
+.env*
+
+# React Router
+/.react-router/
+/build/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Mock files
+tests/mocks/

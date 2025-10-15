@@ -1,0 +1,30 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { Metadata } from './Metadata';
+export type RefundResponse = {
+    id?: string;
+    account_id?: string;
+    adjustment_reason?: string;
+    amount?: number;
+    currency?: string;
+    customer_id?: string;
+    description?: string | null;
+    metadata?: Metadata;
+    original_transaction_id?: string;
+    parent_transaction_id?: string;
+    payment_intent_id?: string;
+    payment_method_id?: string;
+    platform_fee?: number;
+    platform_per_txn_fee?: number;
+    platform_rate?: number;
+    source?: 'api' | 'dashboard' | 'subscription';
+    state?: 'pending' | 'processing' | 'requires_review' | 'succeeded' | 'cancelled' | 'failed';
+    statement_descriptor?: string;
+    succeeded_at?: string;
+    created_at?: string;
+    updated_at?: string;
+    can_void?: boolean;
+};
+

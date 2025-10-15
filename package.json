@@ -1,13 +1,26 @@
 {
 	"name": "@subfi/pay-sdk",
 	"version": "1.0.0",
-	"main": "dist/subfi-pay-sdk.cjs.js",
-	"module": "dist/subfi-pay-sdk.es.js",
-	"types": "dist/index.d.ts",
+	"main": "dist/node.js",
+	"module": "dist/node.mjs",
+	"types": "dist/node.d.ts",
+	"exports": {
+		"./react": {
+			"types": "./dist/react.d.ts",
+			"import": "./dist/react.mjs",
+			"require": "./dist/react.js"
+		},
+		"./node": {
+			"types": "./dist/node.d.ts",
+			"import": "./dist/node.mjs",
+			"require": "./dist/node.js"
+		}
+	},
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"generate": "rm -rf /generated-subfi && cd ../openapi && git pull && npm run generate && cp -r generated ../subfi-pay-js-sdk"
 	},
 	"author": "",
 	"license": "ISC",
@@ -20,5 +33,8 @@
 	},
 	"peerDependencies": {
 		"react": "^17 || ^18 || ^19"
+	},
+	"dependencies": {
+		"openapi-typescript-codegen": "^0.29.0"
 	}
 }

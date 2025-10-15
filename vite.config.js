@@ -10,9 +10,10 @@ export default defineConfig({
 	],
 	build: {
 		lib: {
-			entry: "src/index.tsx",
-			name: "subfi-pay-sdk",
-			fileName: (format) => `subfi-pay-sdk.${format}.js`,
+			entry: {
+				node: "src/node.ts",
+				react: "src/react.tsx",
+			},
 			formats: ["es", "cjs"],
 		},
 		rollupOptions: {
