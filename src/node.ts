@@ -133,6 +133,8 @@ async function findOrCreateCustomer({
       `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers?email=${requestBody.email}`,
       {
         headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
           ...(!headers?.Authorization && { "X-Api-Key": apiKey }),
           ...headers,
         },
@@ -200,6 +202,7 @@ async function createPaymentMethod({
   headers?: Record<string, string>;
   env: RenderToken["env"];
 }): Promise<PaymentMethodResponse> {
+  // biome-ignore lint/correctness/noUnusedVariables: Exclude Authorization header
   const { Authorization, ...remainingHeaders } = headers ?? {};
 
   const response = await fetch(
@@ -238,6 +241,7 @@ async function addPaymentMethodToPaymentIntent({
   headers?: Record<string, string>;
   env: RenderToken["env"];
 }): Promise<void> {
+  // biome-ignore lint/correctness/noUnusedVariables: Exclude Authorization header
   const { Authorization, ...remainingHeaders } = headers ?? {};
 
   const response = await fetch(
@@ -276,6 +280,7 @@ async function confirmPaymentIntent({
   headers?: Record<string, string>;
   env: RenderToken["env"];
 }): Promise<PaymentIntentResponse> {
+  // biome-ignore lint/correctness/noUnusedVariables: Exclude Authorization header
   const { Authorization, ...remainingHeaders } = headers ?? {};
 
   const response = await fetch(
@@ -283,6 +288,8 @@ async function confirmPaymentIntent({
     {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Embed ${token}`,
         ...remainingHeaders,
       },

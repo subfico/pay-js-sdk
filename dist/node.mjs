@@ -1,6 +1,6 @@
 var y = Object.defineProperty;
-var r = (e, t) => y(e, "name", { value: t, configurable: !0 });
-function _({
+var p = (e, t) => y(e, "name", { value: t, configurable: !0 });
+function j({
   renderToken: e,
   apiKey: t
 }) {
@@ -15,7 +15,7 @@ function _({
       headers: o,
       apiKey: t,
       env: a
-    }), p = (await f({
+    }), r = (await f({
       requestBody: {
         ...n.paymentIntent,
         amount: n.paymentIntent?.amount ?? 0,
@@ -27,32 +27,32 @@ function _({
       accountId: i,
       renderToken: e
     })).token ?? "", d = await b({
-      token: p,
+      token: r,
       requestBody: {
         ...n.paymentMethod,
         ...c?.id && { customer_id: c.id }
       },
       headers: o,
       env: a
-    }), m = u(p).payload.payment_intent_id ?? "";
+    }), m = u(r).payload.payment_intent_id ?? "";
     return await w({
-      token: p,
+      token: r,
       paymentIntentId: m,
       paymentMethodId: d.id,
       headers: o,
       env: a
     }), await l({
-      token: p,
+      token: r,
       paymentIntentId: m,
       headers: o,
       env: a
     });
   }
-  return r(s, "createPayment"), {
+  return p(s, "createPayment"), {
     createPayment: s
   };
 }
-r(_, "createClient");
+p(j, "createClient");
 async function h({
   requestBody: e,
   headers: t,
@@ -81,6 +81,8 @@ async function h({
       `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers?email=${e.email}`,
       {
         headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
           ...!t?.Authorization && { "X-Api-Key": a },
           ...t
         }
@@ -92,7 +94,7 @@ async function h({
   }
   throw new Error(i.statusText);
 }
-r(h, "findOrCreateCustomer");
+p(h, "findOrCreateCustomer");
 async function f({
   requestBody: e,
   headers: t,
@@ -122,7 +124,7 @@ async function f({
     return o.json();
   throw new Error(o.statusText);
 }
-r(f, "createPaymentIntent");
+p(f, "createPaymentIntent");
 async function b({
   token: e,
   requestBody: t,
@@ -148,7 +150,7 @@ async function b({
     return o.json();
   throw new Error(o.statusText);
 }
-r(b, "createPaymentMethod");
+p(b, "createPaymentMethod");
 async function w({
   token: e,
   paymentIntentId: t,
@@ -176,7 +178,7 @@ async function w({
   if (!c.ok)
     throw new Error(c.statusText);
 }
-r(w, "addPaymentMethodToPaymentIntent");
+p(w, "addPaymentMethodToPaymentIntent");
 async function l({
   token: e,
   paymentIntentId: t,
@@ -188,6 +190,8 @@ async function l({
     {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Embed ${e}`,
         ...n
       }
@@ -197,7 +201,7 @@ async function l({
     return o.json();
   throw new Error(o.statusText);
 }
-r(l, "confirmPaymentIntent");
+p(l, "confirmPaymentIntent");
 function u(e) {
   const [t = "", a = "", s = ""] = e.split("."), i = typeof atob == "function" ? atob : (n) => Buffer.from(n, "base64").toString("utf8");
   return {
@@ -206,7 +210,7 @@ function u(e) {
     signature: s
   };
 }
-r(u, "decodeJwt");
+p(u, "decodeJwt");
 export {
-  _ as createClient
+  j as createClient
 };
