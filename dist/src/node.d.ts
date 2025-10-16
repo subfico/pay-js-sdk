@@ -1,5 +1,5 @@
-import { CustomerCreateRequest, PaymentIntentCreateRequest, PaymentIntentResponse, PaymentMethodAttributes } from '../generated';
-export type { CustomerCreateRequest, PaymentIntentCreateRequest, PaymentIntentResponse, PaymentMethodAttributes, } from '../generated';
+import { CustomerAttributes, CustomerResponse, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes } from '../generated';
+export type { CustomerAttributes, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes, } from '../generated';
 export declare function createClient({ renderToken, apiKey, }: {
     renderToken: string;
     apiKey: string;
@@ -7,8 +7,10 @@ export declare function createClient({ renderToken, apiKey, }: {
     createPayment: ({ accountId, data, headers, }: {
         accountId: string;
         data: {
-            customer: CustomerCreateRequest;
-            paymentIntent: PaymentIntentCreateRequest;
+            customer: CustomerAttributes | {
+                id: CustomerResponse["id"];
+            };
+            paymentIntent: PaymentIntentAttributes;
             paymentMethod: PaymentMethodAttributes;
         };
         headers?: Record<string, string>;

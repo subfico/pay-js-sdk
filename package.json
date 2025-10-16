@@ -1,40 +1,41 @@
 {
-	"name": "@subfi/pay-sdk",
-	"version": "1.0.0",
-	"main": "dist/node.js",
-	"module": "dist/node.mjs",
-	"types": "dist/node.d.ts",
-	"exports": {
-		"./react": {
-			"types": "./dist/react.d.ts",
-			"import": "./dist/react.mjs",
-			"require": "./dist/react.js"
-		},
-		"./node": {
-			"types": "./dist/node.d.ts",
-			"import": "./dist/node.mjs",
-			"require": "./dist/node.js"
-		}
-	},
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview",
-		"generate": "rm -rf /generated-subfi && cd ../openapi && git pull && npm run generate && cp -r generated ../subfi-pay-js-sdk"
-	},
-	"author": "",
-	"license": "ISC",
-	"description": "Subfi Pay JavaScript SDK",
-	"devDependencies": {
-		"@types/node": "^24.5.2",
-		"@types/react": "^19.1.13",
-		"vite": "^7.0.6",
-		"vite-plugin-dts": "^4.5.4"
-	},
-	"peerDependencies": {
-		"react": "^17 || ^18 || ^19"
-	},
-	"dependencies": {
-		"openapi-typescript-codegen": "^0.29.0"
-	}
+  "name": "@subfi/pay-sdk",
+  "version": "1.0.0",
+  "main": "dist/node.js",
+  "module": "dist/node.mjs",
+  "types": "dist/node.d.ts",
+  "exports": {
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.mjs",
+      "require": "./dist/react.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.mjs",
+      "require": "./dist/node.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate": "rm -rf /generated-subfi && cd ../openapi && git pull && npm run generate && cp -r generated ../subfi-pay-js-sdk"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Subfi Pay JavaScript SDK",
+  "devDependencies": {
+    "@biomejs/biome": "2.0.5",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.13",
+    "vite": "^7.0.6",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "peerDependencies": {
+    "react": "^17 || ^18 || ^19"
+  },
+  "dependencies": {
+    "openapi-typescript-codegen": "^0.29.0"
+  }
 }
