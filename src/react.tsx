@@ -49,7 +49,7 @@ export function SubFiCreditCardPaymentMethodForm({
   }) => void;
   origin: string;
 }) {
-  const [height, setHeight] = useState<string>("0px");
+  const [height, setHeight] = useState<string>("212px");
 
   useEffect(() => {
     function handleMessage(event: MessageEvent<Message>) {
@@ -110,7 +110,7 @@ export function SubFiBankAccountPaymentMethodForm({
   }) => void;
   origin: string;
 }) {
-  const [height, setHeight] = useState<string>("0px");
+  const [height, setHeight] = useState<string>("320px");
 
   useEffect(() => {
     function handleMessage(event: MessageEvent<Message>) {
