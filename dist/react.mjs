@@ -317,7 +317,7 @@ function me({
   onEncryptedPaymentMethodGenerated: m,
   origin: E
 }) {
-  const [c, u] = L("0px");
+  const [c, u] = L("212px");
   return U(() => {
     function l(i) {
       switch (i.data.type) {
@@ -359,7 +359,7 @@ function Ee({
   onEncryptedPaymentMethodGenerated: m,
   origin: E
 }) {
-  const [c, u] = L("0px");
+  const [c, u] = L("320px");
   return U(() => {
     function l(i) {
       switch (i.data.type) {
