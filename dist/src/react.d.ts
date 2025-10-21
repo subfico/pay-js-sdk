@@ -17,9 +17,6 @@ export declare function createMessage(message: Message): Message;
 export declare function generateEncryptedPaymentMethod({ iframeRef, }: {
     iframeRef: React.RefObject<HTMLIFrameElement | null>;
 }): void;
-export declare function SubFiPreconnect({ origin }: {
-    origin: string;
-}): import("react/jsx-runtime").JSX.Element;
 export declare function SubFiCreditCardPaymentMethodForm({ ref, renderToken, onEncryptedPaymentMethodGenerated, origin, }: React.ComponentProps<"iframe"> & {
     renderToken: string;
     onEncryptedPaymentMethodGenerated: ({ paymentMethod, }: {

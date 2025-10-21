@@ -142,7 +142,42 @@ async function findOrCreateCustomer({
     );
 
     if (response.ok) {
-      return (await response.json()).data[0];
+      const existingCustomer: CustomerResponse = (await response.json())
+        .data[0];
+
+      if (
+        requestBody?.metadata &&
+        Object.keys(requestBody.metadata).length > 0
+      ) {
+        const response = await fetch(
+          `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers/${existingCustomer.id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              ...(!headers?.Authorization && { "X-Api-Key": apiKey }),
+              ...headers,
+            },
+            body: JSON.stringify({
+              customer: {
+                metadata: {
+                  ...existingCustomer.metadata,
+                  ...requestBody.metadata,
+                },
+              },
+            }),
+          },
+        );
+
+        if (response.ok) {
+          return response.json();
+        }
+
+        throw new Error(response.statusText);
+      }
+
+      return existingCustomer;
     }
 
     throw new Error(response.statusText);
