@@ -174,16 +174,16 @@ async function findOrCreateCustomer({
           return response.json();
         }
 
-        throw new Error(response.statusText);
+        throw new Error(`${response.statusText}: ${await response.text()}`);
       }
 
       return existingCustomer;
     }
 
-    throw new Error(response.statusText);
+    throw new Error(`${response.statusText}: ${await response.text()}`);
   }
 
-  throw new Error(response.statusText);
+  throw new Error(`${response.statusText}: ${await response.text()}`);
 }
 
 async function createPaymentIntent({
@@ -223,7 +223,7 @@ async function createPaymentIntent({
     return response.json();
   }
 
-  throw new Error(response.statusText);
+  throw new Error(`${response.statusText}: ${await response.text()}`);
 }
 
 async function createPaymentMethod({
@@ -260,7 +260,7 @@ async function createPaymentMethod({
     return response.json();
   }
 
-  throw new Error(response.statusText);
+  throw new Error(`${response.statusText}: ${await response.text()}`);
 }
 
 async function addPaymentMethodToPaymentIntent({
@@ -301,7 +301,7 @@ async function addPaymentMethodToPaymentIntent({
     return;
   }
 
-  throw new Error(response.statusText);
+  throw new Error(`${response.statusText}: ${await response.text()}`);
 }
 
 async function confirmPaymentIntent({
@@ -335,7 +335,7 @@ async function confirmPaymentIntent({
     return response.json();
   }
 
-  throw new Error(response.statusText);
+  throw new Error(`${response.statusText}: ${await response.text()}`);
 }
 
 function decodeJwt(token: string) {

@@ -1,72 +1,72 @@
 var y = Object.defineProperty;
 var p = (o, n) => y(o, "name", { value: n, configurable: !0 });
-function T({
+function A({
   renderToken: o,
   apiKey: n
 }) {
-  const { env: e = "sandbox" } = u(o).payload;
-  async function i({
-    accountId: s,
-    data: a,
+  const { env: a = "sandbox" } = u(o).payload;
+  async function s({
+    accountId: i,
+    data: e,
     headers: t
   }) {
-    const c = "id" in a.customer ? a.customer : await h({
-      requestBody: a.customer,
+    const c = "id" in e.customer ? e.customer : await h({
+      requestBody: e.customer,
       headers: t,
       apiKey: n,
-      env: e
+      env: a
     }), r = (await f({
       requestBody: {
-        ...a.paymentIntent,
-        amount: a.paymentIntent?.amount ?? 0,
+        ...e.paymentIntent,
+        amount: e.paymentIntent?.amount ?? 0,
         ...c?.id && { customer_id: c.id }
       },
       headers: t,
       apiKey: n,
-      env: e,
-      accountId: s,
+      env: a,
+      accountId: i,
       renderToken: o
     })).token ?? "", d = await b({
       token: r,
       requestBody: {
-        ...a.paymentMethod,
+        ...e.paymentMethod,
         ...c?.id && { customer_id: c.id }
       },
       headers: t,
-      env: e
+      env: a
     }), m = u(r).payload.payment_intent_id ?? "";
     return await w({
       token: r,
       paymentIntentId: m,
       paymentMethodId: d.id,
       headers: t,
-      env: e
-    }), await l({
+      env: a
+    }), await $({
       token: r,
       paymentIntentId: m,
       headers: t,
-      env: e
+      env: a
     });
   }
-  return p(i, "createPayment"), {
-    createPayment: i
+  return p(s, "createPayment"), {
+    createPayment: s
   };
 }
-p(T, "createClient");
+p(A, "createClient");
 async function h({
   requestBody: o,
   headers: n,
-  apiKey: e,
-  env: i
+  apiKey: a,
+  env: s
 }) {
-  const s = await fetch(
-    `${i === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers`,
+  const i = await fetch(
+    `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        ...!n?.Authorization && { "X-Api-Key": e },
+        ...!n?.Authorization && { "X-Api-Key": a },
         ...n
       },
       body: JSON.stringify({
@@ -74,31 +74,31 @@ async function h({
       })
     }
   );
-  if (s.ok)
-    return s.json();
-  if (s.status === 422 && o?.email) {
-    const a = await fetch(
-      `${i === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers?email=${o.email}`,
+  if (i.ok)
+    return i.json();
+  if (i.status === 422 && o?.email) {
+    const e = await fetch(
+      `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers?email=${o.email}`,
       {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          ...!n?.Authorization && { "X-Api-Key": e },
+          ...!n?.Authorization && { "X-Api-Key": a },
           ...n
         }
       }
     );
-    if (a.ok) {
-      const t = (await a.json()).data[0];
+    if (e.ok) {
+      const t = (await e.json()).data[0];
       if (o?.metadata && Object.keys(o.metadata).length > 0) {
         const c = await fetch(
-          `${i === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers/${t.id}`,
+          `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers/${t.id}`,
           {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
-              ...!n?.Authorization && { "X-Api-Key": e },
+              ...!n?.Authorization && { "X-Api-Key": a },
               ...n
             },
             body: JSON.stringify({
@@ -113,33 +113,33 @@ async function h({
         );
         if (c.ok)
           return c.json();
-        throw new Error(c.statusText);
+        throw new Error(`${c.statusText}: ${await c.text()}`);
       }
       return t;
     }
-    throw new Error(a.statusText);
+    throw new Error(`${e.statusText}: ${await e.text()}`);
   }
-  throw new Error(s.statusText);
+  throw new Error(`${i.statusText}: ${await i.text()}`);
 }
 p(h, "findOrCreateCustomer");
 async function f({
   requestBody: o,
   headers: n,
-  accountId: e,
-  apiKey: i,
-  renderToken: s,
-  env: a
+  accountId: a,
+  apiKey: s,
+  renderToken: i,
+  env: e
 }) {
   const t = await fetch(
-    `${a === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/payment_intents`,
+    `${e === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/payment_intents`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "X-Account-Id": e,
-        ...!n?.Authorization && { "X-Api-Key": i },
-        "X-Render-Token": s,
+        "X-Account-Id": a,
+        ...!n?.Authorization && { "X-Api-Key": s },
+        "X-Render-Token": i,
         ...n
       },
       body: JSON.stringify({
@@ -149,24 +149,24 @@ async function f({
   );
   if (t.ok)
     return t.json();
-  throw new Error(t.statusText);
+  throw new Error(`${t.statusText}: ${await t.text()}`);
 }
 p(f, "createPaymentIntent");
 async function b({
   token: o,
   requestBody: n,
-  headers: e,
-  env: i
+  headers: a,
+  env: s
 }) {
-  const { Authorization: s, ...a } = e ?? {}, t = await fetch(
-    `${i === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_methods`,
+  const { Authorization: i, ...e } = a ?? {}, t = await fetch(
+    `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_methods`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Embed ${o}`,
-        ...a
+        ...e
       },
       body: JSON.stringify({
         payment_method: n
@@ -175,18 +175,18 @@ async function b({
   );
   if (t.ok)
     return t.json();
-  throw new Error(t.statusText);
+  throw new Error(`${t.statusText}: ${await t.text()}`);
 }
 p(b, "createPaymentMethod");
 async function w({
   token: o,
   paymentIntentId: n,
-  paymentMethodId: e,
-  headers: i,
-  env: s
+  paymentMethodId: a,
+  headers: s,
+  env: i
 }) {
-  const { Authorization: a, ...t } = i ?? {}, c = await fetch(
-    `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_intents/${n}/add_payment_method`,
+  const { Authorization: e, ...t } = s ?? {}, c = await fetch(
+    `${i === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_intents/${n}/add_payment_method`,
     {
       method: "POST",
       headers: {
@@ -197,47 +197,47 @@ async function w({
       },
       body: JSON.stringify({
         payment_intent: {
-          payment_method_id: e
+          payment_method_id: a
         }
       })
     }
   );
   if (!c.ok)
-    throw new Error(c.statusText);
+    throw new Error(`${c.statusText}: ${await c.text()}`);
 }
 p(w, "addPaymentMethodToPaymentIntent");
-async function l({
+async function $({
   token: o,
   paymentIntentId: n,
-  headers: e,
-  env: i
+  headers: a,
+  env: s
 }) {
-  const { Authorization: s, ...a } = e ?? {}, t = await fetch(
-    `${i === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_intents/${n}/confirm`,
+  const { Authorization: i, ...e } = a ?? {}, t = await fetch(
+    `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_intents/${n}/confirm`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Embed ${o}`,
-        ...a
+        ...e
       }
     }
   );
   if (t.ok)
     return t.json();
-  throw new Error(t.statusText);
+  throw new Error(`${t.statusText}: ${await t.text()}`);
 }
-p(l, "confirmPaymentIntent");
+p($, "confirmPaymentIntent");
 function u(o) {
-  const [n = "", e = "", i = ""] = o.split("."), s = typeof atob == "function" ? atob : (a) => Buffer.from(a, "base64").toString("utf8");
+  const [n = "", a = "", s = ""] = o.split("."), i = typeof atob == "function" ? atob : (e) => Buffer.from(e, "base64").toString("utf8");
   return {
-    header: JSON.parse(s(n)),
-    payload: JSON.parse(s(e)),
-    signature: i
+    header: JSON.parse(i(n)),
+    payload: JSON.parse(i(a)),
+    signature: s
   };
 }
 p(u, "decodeJwt");
 export {
-  T as createClient
+  A as createClient
 };
