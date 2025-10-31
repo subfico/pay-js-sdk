@@ -1,58 +1,61 @@
-var y = Object.defineProperty;
-var p = (o, n) => y(o, "name", { value: n, configurable: !0 });
-function A({
+var f = Object.defineProperty;
+var c = (o, n) => f(o, "name", { value: n, configurable: !0 });
+function j({
   renderToken: o,
   apiKey: n
 }) {
-  const { env: a = "sandbox" } = u(o).payload;
+  const { env: a = "sandbox" } = d(o).payload;
   async function s({
     accountId: i,
     data: e,
-    headers: t
+    headers: t,
+    mockPaymentIntent: p
   }) {
-    const c = "id" in e.customer ? e.customer : await h({
+    if (p)
+      return p;
+    const r = "id" in e.customer ? e.customer : await h({
       requestBody: e.customer,
       headers: t,
       apiKey: n,
       env: a
-    }), r = (await f({
+    }), m = (await b({
       requestBody: {
         ...e.paymentIntent,
         amount: e.paymentIntent?.amount ?? 0,
-        ...c?.id && { customer_id: c.id }
+        ...r?.id && { customer_id: r.id }
       },
       headers: t,
       apiKey: n,
       env: a,
       accountId: i,
       renderToken: o
-    })).token ?? "", d = await b({
-      token: r,
+    })).token ?? "", y = await w({
+      token: m,
       requestBody: {
         ...e.paymentMethod,
-        ...c?.id && { customer_id: c.id }
+        ...r?.id && { customer_id: r.id }
       },
       headers: t,
       env: a
-    }), m = u(r).payload.payment_intent_id ?? "";
-    return await w({
-      token: r,
-      paymentIntentId: m,
-      paymentMethodId: d.id,
+    }), u = d(m).payload.payment_intent_id ?? "";
+    return await $({
+      token: m,
+      paymentIntentId: u,
+      paymentMethodId: y.id,
       headers: t,
       env: a
-    }), await $({
-      token: r,
-      paymentIntentId: m,
+    }), await l({
+      token: m,
+      paymentIntentId: u,
       headers: t,
       env: a
     });
   }
-  return p(s, "createPayment"), {
+  return c(s, "createPayment"), {
     createPayment: s
   };
 }
-p(A, "createClient");
+c(j, "createClient");
 async function h({
   requestBody: o,
   headers: n,
@@ -91,7 +94,7 @@ async function h({
     if (e.ok) {
       const t = (await e.json()).data[0];
       if (o?.metadata && Object.keys(o.metadata).length > 0) {
-        const c = await fetch(
+        const p = await fetch(
           `${s === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers/${t.id}`,
           {
             method: "PATCH",
@@ -111,9 +114,9 @@ async function h({
             })
           }
         );
-        if (c.ok)
-          return c.json();
-        throw new Error(`${c.statusText}: ${await c.text()}`);
+        if (p.ok)
+          return p.json();
+        throw new Error(`${p.statusText}: ${await p.text()}`);
       }
       return t;
     }
@@ -121,8 +124,8 @@ async function h({
   }
   throw new Error(`${i.statusText}: ${await i.text()}`);
 }
-p(h, "findOrCreateCustomer");
-async function f({
+c(h, "findOrCreateCustomer");
+async function b({
   requestBody: o,
   headers: n,
   accountId: a,
@@ -151,8 +154,8 @@ async function f({
     return t.json();
   throw new Error(`${t.statusText}: ${await t.text()}`);
 }
-p(f, "createPaymentIntent");
-async function b({
+c(b, "createPaymentIntent");
+async function w({
   token: o,
   requestBody: n,
   headers: a,
@@ -177,15 +180,15 @@ async function b({
     return t.json();
   throw new Error(`${t.statusText}: ${await t.text()}`);
 }
-p(b, "createPaymentMethod");
-async function w({
+c(w, "createPaymentMethod");
+async function $({
   token: o,
   paymentIntentId: n,
   paymentMethodId: a,
   headers: s,
   env: i
 }) {
-  const { Authorization: e, ...t } = s ?? {}, c = await fetch(
+  const { Authorization: e, ...t } = s ?? {}, p = await fetch(
     `${i === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_intents/${n}/add_payment_method`,
     {
       method: "POST",
@@ -202,11 +205,11 @@ async function w({
       })
     }
   );
-  if (!c.ok)
-    throw new Error(`${c.statusText}: ${await c.text()}`);
+  if (!p.ok)
+    throw new Error(`${p.statusText}: ${await p.text()}`);
 }
-p(w, "addPaymentMethodToPaymentIntent");
-async function $({
+c($, "addPaymentMethodToPaymentIntent");
+async function l({
   token: o,
   paymentIntentId: n,
   headers: a,
@@ -228,8 +231,8 @@ async function $({
     return t.json();
   throw new Error(`${t.statusText}: ${await t.text()}`);
 }
-p($, "confirmPaymentIntent");
-function u(o) {
+c(l, "confirmPaymentIntent");
+function d(o) {
   const [n = "", a = "", s = ""] = o.split("."), i = typeof atob == "function" ? atob : (e) => Buffer.from(e, "base64").toString("utf8");
   return {
     header: JSON.parse(i(n)),
@@ -237,7 +240,7 @@ function u(o) {
     signature: s
   };
 }
-p(u, "decodeJwt");
+c(d, "decodeJwt");
 export {
-  A as createClient
+  j as createClient
 };

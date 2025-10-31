@@ -25,6 +25,6 @@ export type RefundResponse = {
     succeeded_at?: string;
     created_at?: string;
     updated_at?: string;
-    can_void?: boolean;
+    allowed_reverse_action?: 'void' | null;
 };
 

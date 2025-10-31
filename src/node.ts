@@ -29,6 +29,7 @@ export function createClient({
     accountId,
     data,
     headers,
+    mockPaymentIntent,
   }: {
     accountId: string;
     data: {
@@ -37,7 +38,12 @@ export function createClient({
       paymentMethod: PaymentMethodAttributes;
     };
     headers?: Record<string, string>;
+    mockPaymentIntent?: PaymentIntentResponse;
   }): Promise<PaymentIntentResponse> {
+    if (mockPaymentIntent) {
+      return mockPaymentIntent;
+    }
+
     const customer =
       "id" in data.customer
         ? data.customer

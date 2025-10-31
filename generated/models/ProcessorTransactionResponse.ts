@@ -7,6 +7,10 @@ export type ProcessorTransactionResponse = {
     id?: string;
     account_id?: string;
     approved?: boolean;
+    avs_check?: string;
+    avs_check_message?: string;
+    cvc_check?: string;
+    cvc_check_message?: string;
     external_reference?: string;
     metadata?: Metadata;
     payment_method_id?: string;

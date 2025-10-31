@@ -11,8 +11,6 @@ export type ChargeResponse = {
     currency?: string;
     customer_id?: string;
     description?: string | null;
-    can_refund?: boolean;
-    can_void?: boolean;
     allowed_reverse_action?: 'void' | 'refund' | null;
     metadata?: Metadata;
     original_transaction_id?: string;

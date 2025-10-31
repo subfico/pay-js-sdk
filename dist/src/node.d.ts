@@ -4,7 +4,7 @@ export declare function createClient({ renderToken, apiKey, }: {
     renderToken: string;
     apiKey: string;
 }): {
-    createPayment: ({ accountId, data, headers, }: {
+    createPayment: ({ accountId, data, headers, mockPaymentIntent, }: {
         accountId: string;
         data: {
             customer: CustomerAttributes | {
@@ -14,5 +14,6 @@ export declare function createClient({ renderToken, apiKey, }: {
             paymentMethod: PaymentMethodAttributes;
         };
         headers?: Record<string, string>;
+        mockPaymentIntent?: PaymentIntentResponse;
     }) => Promise<PaymentIntentResponse>;
 };
