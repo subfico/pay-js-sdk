@@ -16,6 +16,16 @@ export type {
   PaymentMethodAttributes,
 } from "~/generated";
 
+export type CreatePaymentArgs = {
+  accountId: string;
+  data: {
+    customer: CustomerAttributes | { id: CustomerResponse["id"] };
+    paymentIntent: PaymentIntentAttributes;
+    paymentMethod: PaymentMethodAttributes;
+  };
+  headers?: Record<string, string>;
+};
+
 export function createClient({
   renderToken,
   apiKey,
@@ -29,21 +39,7 @@ export function createClient({
     accountId,
     data,
     headers,
-    mockPaymentIntent,
-  }: {
-    accountId: string;
-    data: {
-      customer: CustomerAttributes | { id: CustomerResponse["id"] };
-      paymentIntent: PaymentIntentAttributes;
-      paymentMethod: PaymentMethodAttributes;
-    };
-    headers?: Record<string, string>;
-    mockPaymentIntent?: PaymentIntentResponse;
-  }): Promise<PaymentIntentResponse> {
-    if (mockPaymentIntent) {
-      return mockPaymentIntent;
-    }
-
+  }: CreatePaymentArgs): Promise<PaymentIntentResponse> {
     const customer =
       "id" in data.customer
         ? data.customer
