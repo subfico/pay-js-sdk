@@ -11,9 +11,11 @@ import type {
 
 export type {
   CustomerAttributes,
+  CustomerResponse,
   PaymentIntentAttributes,
   PaymentIntentResponse,
   PaymentMethodAttributes,
+  PaymentMethodResponse,
 } from "~/generated";
 
 export type CreatePaymentArgs = {
