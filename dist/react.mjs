@@ -1,101 +1,83 @@
-var ae = Object.defineProperty;
-var t = (a, f) => ae(a, "name", { value: f, configurable: !0 });
-import oe, { useState as L, useEffect as U } from "react";
-var h = { exports: {} }, p = {};
-/**
- * @license React
- * react-jsx-runtime.production.js
- *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var F;
-function se() {
-  if (F) return p;
-  F = 1;
-  var a = Symbol.for("react.transitional.element"), f = Symbol.for("react.fragment");
-  function m(E, c, u) {
+var ne = Object.defineProperty;
+var t = (s, f) => ne(s, "name", { value: f, configurable: !0 });
+import ae, { useState as I, useEffect as L } from "react";
+var R = { exports: {} }, _ = {};
+var D;
+function oe() {
+  if (D) return _;
+  D = 1;
+  var s = Symbol.for("react.transitional.element"), f = Symbol.for("react.fragment");
+  function d(m, i, c) {
     var l = null;
-    if (u !== void 0 && (l = "" + u), c.key !== void 0 && (l = "" + c.key), "key" in c) {
-      u = {};
-      for (var i in c)
-        i !== "key" && (u[i] = c[i]);
-    } else u = c;
-    return c = u.ref, {
-      $$typeof: a,
-      type: E,
+    if (c !== void 0 && (l = "" + c), i.key !== void 0 && (l = "" + i.key), "key" in i) {
+      c = {};
+      for (var u in i)
+        u !== "key" && (c[u] = i[u]);
+    } else c = i;
+    return i = c.ref, {
+      $$typeof: s,
+      type: m,
       key: l,
-      ref: c !== void 0 ? c : null,
-      props: u
+      ref: i !== void 0 ? i : null,
+      props: c
     };
   }
-  return t(m, "jsxProd"), p.Fragment = f, p.jsx = m, p.jsxs = m, p;
+  return t(d, "jsxProd"), _.Fragment = f, _.jsx = d, _.jsxs = d, _;
 }
-t(se, "requireReactJsxRuntime_production");
-var T = {};
-/**
- * @license React
- * react-jsx-runtime.development.js
- *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+t(oe, "requireReactJsxRuntime_production");
+var p = {};
 var $;
-function ce() {
-  return $ || ($ = 1, process.env.NODE_ENV !== "production" && function() {
-    function a(e) {
+function se() {
+  return $ || ($ = 1, process.env.NODE_ENV !== "production" && (function() {
+    function s(e) {
       if (e == null) return null;
       if (typeof e == "function")
-        return e.$$typeof === re ? null : e.displayName || e.name || null;
+        return e.$$typeof === ee ? null : e.displayName || e.name || null;
       if (typeof e == "string") return e;
       switch (e) {
-        case v:
+        case h:
           return "Fragment";
-        case z:
-          return "Profiler";
         case J:
+          return "Profiler";
+        case q:
           return "StrictMode";
-        case Z:
+        case B:
           return "Suspense";
-        case Q:
+        case Z:
           return "SuspenseList";
-        case ee:
+        case K:
           return "Activity";
       }
       if (typeof e == "object")
         switch (typeof e.tag == "number" && console.error(
           "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
         ), e.$$typeof) {
-          case q:
+          case H:
             return "Portal";
-          case X:
-            return (e.displayName || "Context") + ".Provider";
+          case z:
+            return e.displayName || "Context";
           case V:
             return (e._context.displayName || "Context") + ".Consumer";
-          case B:
+          case X:
             var r = e.render;
             return e = e.displayName, e || (e = r.displayName || r.name || "", e = e !== "" ? "ForwardRef(" + e + ")" : "ForwardRef"), e;
-          case K:
-            return r = e.displayName || null, r !== null ? r : a(e.type) || "Memo";
-          case x:
+          case Q:
+            return r = e.displayName || null, r !== null ? r : s(e.type) || "Memo";
+          case v:
             r = e._payload, e = e._init;
             try {
-              return a(e(r));
+              return s(e(r));
             } catch {
             }
         }
       return null;
     }
-    t(a, "getComponentNameFromType");
+    t(s, "getComponentNameFromType");
     function f(e) {
       return "" + e;
     }
     t(f, "testStringCoercion");
-    function m(e) {
+    function d(e) {
       try {
         f(e);
         var r = !1;
@@ -104,47 +86,47 @@ function ce() {
       }
       if (r) {
         r = console;
-        var n = r.error, o = typeof Symbol == "function" && Symbol.toStringTag && e[Symbol.toStringTag] || e.constructor.name || "Object";
+        var n = r.error, a = typeof Symbol == "function" && Symbol.toStringTag && e[Symbol.toStringTag] || e.constructor.name || "Object";
         return n.call(
           r,
           "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
-          o
+          a
         ), f(e);
       }
     }
-    t(m, "checkKeyStringCoercion");
-    function E(e) {
-      if (e === v) return "<>";
-      if (typeof e == "object" && e !== null && e.$$typeof === x)
+    t(d, "checkKeyStringCoercion");
+    function m(e) {
+      if (e === h) return "<>";
+      if (typeof e == "object" && e !== null && e.$$typeof === v)
         return "<...>";
       try {
-        var r = a(e);
+        var r = s(e);
         return r ? "<" + r + ">" : "<...>";
       } catch {
         return "<...>";
       }
     }
-    t(E, "getTaskName");
-    function c() {
-      var e = k.A;
+    t(m, "getTaskName");
+    function i() {
+      var e = y.A;
       return e === null ? null : e.getOwner();
     }
-    t(c, "getOwner");
-    function u() {
+    t(i, "getOwner");
+    function c() {
       return Error("react-stack-top-frame");
     }
-    t(u, "UnknownOwner");
+    t(c, "UnknownOwner");
     function l(e) {
-      if (N.call(e, "key")) {
+      if (x.call(e, "key")) {
         var r = Object.getOwnPropertyDescriptor(e, "key").get;
         if (r && r.isReactWarning) return !1;
       }
       return e.key !== void 0;
     }
     t(l, "hasValidKey");
-    function i(e, r) {
+    function u(e, r) {
       function n() {
-        j || (j = !0, console.error(
+        N || (N = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
           r
         ));
@@ -154,24 +136,25 @@ function ce() {
         configurable: !0
       });
     }
-    t(i, "defineKeyPropWarningGetter");
-    function G() {
-      var e = a(this.type);
-      return M[e] || (M[e] = !0, console.error(
+    t(u, "defineKeyPropWarningGetter");
+    function W() {
+      var e = s(this.type);
+      return j[e] || (j[e] = !0, console.error(
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), e = this.props.ref, e !== void 0 ? e : null;
     }
-    t(G, "elementRefGetterWithDeprecationWarning");
-    function H(e, r, n, o, b, d, w, y) {
-      return n = d.ref, e = {
+    t(W, "elementRefGetterWithDeprecationWarning");
+    function G(e, r, n, a, T, g) {
+      var o = n.ref;
+      return e = {
         $$typeof: O,
         type: e,
         key: r,
-        props: d,
-        _owner: b
-      }, (n !== void 0 ? n : null) !== null ? Object.defineProperty(e, "ref", {
+        props: n,
+        _owner: a
+      }, (o !== void 0 ? o : null) !== null ? Object.defineProperty(e, "ref", {
         enumerable: !1,
-        get: G
+        get: W
       }) : Object.defineProperty(e, "ref", { enumerable: !1, value: null }), e._store = {}, Object.defineProperty(e._store, "validated", {
         configurable: !1,
         enumerable: !1,
@@ -186,147 +169,145 @@ function ce() {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: w
+        value: T
       }), Object.defineProperty(e, "_debugTask", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: y
+        value: g
       }), Object.freeze && (Object.freeze(e.props), Object.freeze(e)), e;
     }
-    t(H, "ReactElement");
-    function P(e, r, n, o, b, d, w, y) {
-      var s = r.children;
-      if (s !== void 0)
-        if (o)
-          if (te(s)) {
-            for (o = 0; o < s.length; o++)
-              S(s[o]);
-            Object.freeze && Object.freeze(s);
+    t(G, "ReactElement");
+    function A(e, r, n, a, T, g) {
+      var o = r.children;
+      if (o !== void 0)
+        if (a)
+          if (re(o)) {
+            for (a = 0; a < o.length; a++)
+              P(o[a]);
+            Object.freeze && Object.freeze(o);
           } else
             console.error(
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
-        else S(s);
-      if (N.call(r, "key")) {
-        s = a(e);
-        var _ = Object.keys(r).filter(function(ne) {
-          return ne !== "key";
+        else P(o);
+      if (x.call(r, "key")) {
+        o = s(e);
+        var E = Object.keys(r).filter(function(te) {
+          return te !== "key";
         });
-        o = 0 < _.length ? "{key: someKey, " + _.join(": ..., ") + ": ...}" : "{key: someKey}", D[s + o] || (_ = 0 < _.length ? "{" + _.join(": ..., ") + ": ...}" : "{}", console.error(
+        a = 0 < E.length ? "{key: someKey, " + E.join(": ..., ") + ": ...}" : "{key: someKey}", Y[o + a] || (E = 0 < E.length ? "{" + E.join(": ..., ") + ": ...}" : "{}", console.error(
           `A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
   <%s key={someKey} {...props} />`,
+          a,
           o,
-          s,
-          _,
-          s
-        ), D[s + o] = !0);
+          E,
+          o
+        ), Y[o + a] = !0);
       }
-      if (s = null, n !== void 0 && (m(n), s = "" + n), l(r) && (m(r.key), s = "" + r.key), "key" in r) {
+      if (o = null, n !== void 0 && (d(n), o = "" + n), l(r) && (d(r.key), o = "" + r.key), "key" in r) {
         n = {};
-        for (var A in r)
-          A !== "key" && (n[A] = r[A]);
+        for (var w in r)
+          w !== "key" && (n[w] = r[w]);
       } else n = r;
-      return s && i(
+      return o && u(
         n,
         typeof e == "function" ? e.displayName || e.name || "Unknown" : e
-      ), H(
+      ), G(
         e,
-        s,
-        d,
-        b,
-        c(),
+        o,
         n,
-        w,
-        y
+        i(),
+        T,
+        g
       );
     }
-    t(P, "jsxDEVImpl");
-    function S(e) {
-      typeof e == "object" && e !== null && e.$$typeof === O && e._store && (e._store.validated = 1);
+    t(A, "jsxDEVImpl");
+    function P(e) {
+      S(e) ? e._store && (e._store.validated = 1) : typeof e == "object" && e !== null && e.$$typeof === v && (e._payload.status === "fulfilled" ? S(e._payload.value) && e._payload.value._store && (e._payload.value._store.validated = 1) : e._store && (e._store.validated = 1));
     }
-    t(S, "validateChildKeys");
-    var R = oe, O = Symbol.for("react.transitional.element"), q = Symbol.for("react.portal"), v = Symbol.for("react.fragment"), J = Symbol.for("react.strict_mode"), z = Symbol.for("react.profiler"), V = Symbol.for("react.consumer"), X = Symbol.for("react.context"), B = Symbol.for("react.forward_ref"), Z = Symbol.for("react.suspense"), Q = Symbol.for("react.suspense_list"), K = Symbol.for("react.memo"), x = Symbol.for("react.lazy"), ee = Symbol.for("react.activity"), re = Symbol.for("react.client.reference"), k = R.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, N = Object.prototype.hasOwnProperty, te = Array.isArray, g = console.createTask ? console.createTask : function() {
+    t(P, "validateChildKeys");
+    function S(e) {
+      return typeof e == "object" && e !== null && e.$$typeof === O;
+    }
+    t(S, "isValidElement");
+    var b = ae, O = Symbol.for("react.transitional.element"), H = Symbol.for("react.portal"), h = Symbol.for("react.fragment"), q = Symbol.for("react.strict_mode"), J = Symbol.for("react.profiler"), V = Symbol.for("react.consumer"), z = Symbol.for("react.context"), X = Symbol.for("react.forward_ref"), B = Symbol.for("react.suspense"), Z = Symbol.for("react.suspense_list"), Q = Symbol.for("react.memo"), v = Symbol.for("react.lazy"), K = Symbol.for("react.activity"), ee = Symbol.for("react.client.reference"), y = b.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, x = Object.prototype.hasOwnProperty, re = Array.isArray, k = console.createTask ? console.createTask : function() {
       return null;
     };
-    R = {
+    b = {
       react_stack_bottom_frame: /* @__PURE__ */ t(function(e) {
         return e();
       }, "react_stack_bottom_frame")
     };
-    var j, M = {}, C = R.react_stack_bottom_frame.bind(
-      R,
-      u
-    )(), Y = g(E(u)), D = {};
-    T.Fragment = v, T.jsx = function(e, r, n, o, b) {
-      var d = 1e4 > k.recentlyCreatedOwnerStacks++;
-      return P(
+    var N, j = {}, M = b.react_stack_bottom_frame.bind(
+      b,
+      c
+    )(), C = k(m(c)), Y = {};
+    p.Fragment = h, p.jsx = function(e, r, n) {
+      var a = 1e4 > y.recentlyCreatedOwnerStacks++;
+      return A(
         e,
         r,
         n,
         !1,
-        o,
-        b,
-        d ? Error("react-stack-top-frame") : C,
-        d ? g(E(e)) : Y
+        a ? Error("react-stack-top-frame") : M,
+        a ? k(m(e)) : C
       );
-    }, T.jsxs = function(e, r, n, o, b) {
-      var d = 1e4 > k.recentlyCreatedOwnerStacks++;
-      return P(
+    }, p.jsxs = function(e, r, n) {
+      var a = 1e4 > y.recentlyCreatedOwnerStacks++;
+      return A(
         e,
         r,
         n,
         !0,
-        o,
-        b,
-        d ? Error("react-stack-top-frame") : C,
-        d ? g(E(e)) : Y
+        a ? Error("react-stack-top-frame") : M,
+        a ? k(m(e)) : C
       );
     };
-  }()), T;
+  })()), p;
 }
-t(ce, "requireReactJsxRuntime_development");
-var I;
+t(se, "requireReactJsxRuntime_development");
+var F;
 function ie() {
-  return I || (I = 1, process.env.NODE_ENV === "production" ? h.exports = se() : h.exports = ce()), h.exports;
+  return F || (F = 1, process.env.NODE_ENV === "production" ? R.exports = oe() : R.exports = se()), R.exports;
 }
 t(ie, "requireJsxRuntime");
-var W = ie();
-function fe(a) {
-  return a;
+var U = ie();
+function le(s) {
+  return s;
 }
-t(fe, "createMessage");
-function de({
-  iframeRef: a
+t(le, "createMessage");
+function fe({
+  iframeRef: s
 }) {
-  a.current?.contentWindow?.postMessage(
+  s.current?.contentWindow?.postMessage(
     {
       type: "GENERATE_ENCRYPTED_PAYMENT_METHOD"
     },
     "*"
   );
 }
-t(de, "generateEncryptedPaymentMethod");
-function me({
-  ref: a,
+t(fe, "generateEncryptedPaymentMethod");
+function de({
+  ref: s,
   renderToken: f,
-  onEncryptedPaymentMethodGenerated: m,
-  origin: E
+  onEncryptedPaymentMethodGenerated: d,
+  origin: m
 }) {
-  const [c, u] = L("212px");
-  return U(() => {
-    function l(i) {
-      switch (i.data.type) {
+  const [i, c] = I("212px");
+  return L(() => {
+    function l(u) {
+      switch (u.data.type) {
         case "UPDATE_HEIGHT":
-          u(i.data.height);
+          c(u.data.height);
           break;
         case "GENERATE_ENCRYPTED_PAYMENT_METHOD":
-          i.data.paymentMethod && m({
-            paymentMethod: i.data.paymentMethod
+          u.data.paymentMethod && d({
+            paymentMethod: u.data.paymentMethod
           });
           break;
       }
@@ -334,41 +315,41 @@ function me({
     return t(l, "handleMessage"), window.addEventListener("message", l), () => {
       window.removeEventListener("message", l);
     };
-  }), /* @__PURE__ */ W.jsx(
+  }), /* @__PURE__ */ U.jsx(
     "iframe",
     {
-      ref: a,
+      ref: s,
       title: "Secure credit card payment method form powered by SubFi",
       name: "subfi-credit-card-payment-method-form",
       role: "presentation",
-      src: `${E}/iframe/card?token=${f}`,
+      src: `${m}/iframe/card?token=${f}`,
       style: {
         width: "calc(100% + 8px)",
         transition: "height 200ms ease-in-out",
         margin: "0 -4px",
-        height: c
+        height: i
       },
       scrolling: "no"
     }
   );
 }
-t(me, "SubFiCreditCardPaymentMethodForm");
-function Ee({
-  ref: a,
+t(de, "SubFiCreditCardPaymentMethodForm");
+function me({
+  ref: s,
   renderToken: f,
-  onEncryptedPaymentMethodGenerated: m,
-  origin: E
+  onEncryptedPaymentMethodGenerated: d,
+  origin: m
 }) {
-  const [c, u] = L("320px");
-  return U(() => {
-    function l(i) {
-      switch (i.data.type) {
+  const [i, c] = I("320px");
+  return L(() => {
+    function l(u) {
+      switch (u.data.type) {
         case "UPDATE_HEIGHT":
-          u(i.data.height);
+          c(u.data.height);
           break;
         case "GENERATE_ENCRYPTED_PAYMENT_METHOD":
-          i.data.paymentMethod && m({
-            paymentMethod: i.data.paymentMethod
+          u.data.paymentMethod && d({
+            paymentMethod: u.data.paymentMethod
           });
           break;
       }
@@ -376,28 +357,28 @@ function Ee({
     return t(l, "handleMessage"), window.addEventListener("message", l), () => {
       window.removeEventListener("message", l);
     };
-  }), /* @__PURE__ */ W.jsx(
+  }), /* @__PURE__ */ U.jsx(
     "iframe",
     {
-      ref: a,
+      ref: s,
       title: "Secure bank account payment method form powered by SubFi",
       name: "subfi-bank-account-payment-method-form",
       role: "presentation",
-      src: `${E}/iframe/bank?token=${f}`,
+      src: `${m}/iframe/bank?token=${f}`,
       style: {
         width: "calc(100% + 8px)",
         transition: "height 200ms ease-in-out",
         margin: "0 -4px",
-        height: c
+        height: i
       },
       scrolling: "no"
     }
   );
 }
-t(Ee, "SubFiBankAccountPaymentMethodForm");
+t(me, "SubFiBankAccountPaymentMethodForm");
 export {
-  Ee as SubFiBankAccountPaymentMethodForm,
-  me as SubFiCreditCardPaymentMethodForm,
-  fe as createMessage,
-  de as generateEncryptedPaymentMethod
+  me as SubFiBankAccountPaymentMethodForm,
+  de as SubFiCreditCardPaymentMethodForm,
+  le as createMessage,
+  fe as generateEncryptedPaymentMethod
 };
