@@ -65,9 +65,6 @@ export function SubFiCreditCardPaymentMethodForm({
             });
           }
           break;
-
-        default:
-          break;
       }
     }
 
@@ -125,9 +122,6 @@ export function SubFiBankAccountPaymentMethodForm({
               paymentMethod: event.data.paymentMethod,
             });
           }
-          break;
-
-        default:
           break;
       }
     }

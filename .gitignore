@@ -16,3 +16,7 @@ node_modules/
 
 # Mock files
 tests/mocks/
+
+# Test artifacts
+coverage/
+test/__screenshots__/
