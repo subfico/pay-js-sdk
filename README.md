@@ -570,22 +570,8 @@ import type {
 ```bash
 # Run tests
 npm test
-
-# Run tests with UI
-npm run test:ui
-
-# Run tests with coverage
-npm run test:coverage
 ```
 
 Tests use Vitest v4 with browser mode for accurate testing. See test files for examples.
 
-## Support
-
 - **Documentation**: [docs.subfi.com](https://docs.subfi.com)
-- **API Reference**: [api.subfi.com/docs](https://api.subfi.com/docs)
-- **Support**: support@subfi.com
-
-## License
-
-ISC

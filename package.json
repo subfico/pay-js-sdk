@@ -24,7 +24,6 @@
     "generate": "rm -rf /generated && cd ../openapi && git pull && npm run generate && cp -r generated ../pay-js-sdk"
   },
   "author": "",
-  "license": "ISC",
   "description": "Subfi Pay JavaScript SDK",
   "devDependencies": {
     "@biomejs/biome": "2.3.4",
