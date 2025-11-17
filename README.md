@@ -7,7 +7,7 @@ The official JavaScript SDK for SubFi Pay. This SDK provides secure, PCI-complia
 ## Installation
 
 ```bash
-npm install @subfi/pay-sdk
+npm install github:subfico/pay-js-sdk
 ```
 
 ## Quick Start

@@ -1,5 +1,5 @@
 {
-  "name": "@subfi/pay-sdk",
+  "name": "@subfico/pay-js-sdk",
   "version": "1.0.0",
   "main": "dist/node.js",
   "module": "dist/node.mjs",
@@ -21,7 +21,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "generate": "rm -rf /generated-subfi && cd ../openapi && git pull && npm run generate && cp -r generated ../subfi-pay-js-sdk"
+    "generate": "rm -rf /generated && cd ../openapi && git pull && npm run generate && cp -r generated ../pay-js-sdk"
   },
   "author": "",
   "license": "ISC",
