@@ -17,7 +17,7 @@ export type ChargeResponse = {
     platform_per_txn_fee?: number;
     platform_rate?: string;
     source?: 'api' | 'dashboard' | 'subscription';
-    state?: 'requires_confirmation' | 'processing' | 'requires_capture' | 'succeeded' | 'failed' | 'cancelled';
+    state?: 'requires_confirmation' | 'processing' | 'requires_capture' | 'succeeded' | 'failed' | 'errored' | 'cancelled';
     statement_descriptor?: string;
     succeeded_at?: string;
     created_at?: string;

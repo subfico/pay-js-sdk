@@ -4,7 +4,6 @@ import type {
   PaymentIntentAttributes,
   PaymentIntentResponse,
   PaymentMethodAttributes,
-  PaymentMethodResponse,
   RenderToken,
   TokenResponse,
 } from "~/generated";
@@ -67,30 +66,16 @@ export function createClient({
 
     const token = paymentIntent.token ?? "";
 
-    const paymentMethod = await createPaymentMethod({
-      token,
-      requestBody: {
-        ...data.paymentMethod,
-        ...(customer?.id && { customer_id: customer.id }),
-      },
-      headers,
-      env,
-    });
-
     const paymentIntentId: string =
       decodeJwt(token).payload.payment_intent_id ?? "";
-
-    await addPaymentMethodToPaymentIntent({
-      token,
-      paymentIntentId,
-      paymentMethodId: paymentMethod.id,
-      headers,
-      env,
-    });
 
     return await confirmPaymentIntent({
       token,
       paymentIntentId,
+      paymentMethod: {
+        ...data.paymentMethod,
+        ...(customer?.id && { customer_id: customer.id }),
+      },
       headers,
       env,
     });
@@ -230,92 +215,16 @@ async function createPaymentIntent({
   throw new Error(`${response.statusText}: ${await response.text()}`);
 }
 
-async function createPaymentMethod({
-  token,
-  requestBody,
-  headers,
-  env,
-}: {
-  token: string | undefined;
-  requestBody: PaymentMethodAttributes;
-  headers?: Record<string, string>;
-  env: RenderToken["env"];
-}): Promise<PaymentMethodResponse> {
-  // biome-ignore lint/correctness/noUnusedVariables: Exclude Authorization header
-  const { Authorization, ...remainingHeaders } = headers ?? {};
-
-  const response = await fetch(
-    `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_methods`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Embed ${token}`,
-        ...remainingHeaders,
-      },
-      body: JSON.stringify({
-        payment_method: requestBody,
-      }),
-    },
-  );
-
-  if (response.ok) {
-    return response.json();
-  }
-
-  throw new Error(`${response.statusText}: ${await response.text()}`);
-}
-
-async function addPaymentMethodToPaymentIntent({
-  token,
-  paymentIntentId,
-  paymentMethodId,
-  headers,
-  env,
-}: {
-  token: string | undefined;
-  paymentIntentId: string | undefined;
-  paymentMethodId: string | undefined;
-  headers?: Record<string, string>;
-  env: RenderToken["env"];
-}): Promise<void> {
-  // biome-ignore lint/correctness/noUnusedVariables: Exclude Authorization header
-  const { Authorization, ...remainingHeaders } = headers ?? {};
-
-  const response = await fetch(
-    `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_intents/${paymentIntentId}/add_payment_method`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Embed ${token}`,
-        ...remainingHeaders,
-      },
-      body: JSON.stringify({
-        payment_intent: {
-          payment_method_id: paymentMethodId,
-        },
-      }),
-    },
-  );
-
-  if (response.ok) {
-    return;
-  }
-
-  throw new Error(`${response.statusText}: ${await response.text()}`);
-}
-
 async function confirmPaymentIntent({
   token,
   paymentIntentId,
+  paymentMethod,
   headers,
   env,
 }: {
   token: string | undefined;
   paymentIntentId: string | undefined;
+  paymentMethod: PaymentMethodAttributes
   headers?: Record<string, string>;
   env: RenderToken["env"];
 }): Promise<PaymentIntentResponse> {
@@ -332,6 +241,11 @@ async function confirmPaymentIntent({
         Authorization: `Embed ${token}`,
         ...remainingHeaders,
       },
+      body: JSON.stringify({
+        payment_intent: {
+          payment_method: paymentMethod,
+        },
+      }),
     },
   );
 

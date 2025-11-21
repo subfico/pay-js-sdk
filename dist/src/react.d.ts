@@ -1,4 +1,4 @@
-import { PaymentMethodAttributes } from '../generated';
+import { PaymentMethodAttributes } from '../../../../../generated';
 export type Message = {
     type: "UPDATE_HEIGHT";
     height: string;

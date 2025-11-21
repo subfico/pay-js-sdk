@@ -4,16 +4,6 @@ import { PaymentMethodResponse } from '../models/PaymentMethodResponse';
 import { CancelablePromise } from '../core/CancelablePromise';
 export declare class PaymentMethodsService {
     /**
-     * Create a payment method
-     * @param xApiVersion
-     * @param xAccountId
-     * @param requestBody
-     * @param xIdempotencyKey
-     * @returns PaymentMethodResponse Payment method created successfully
-     * @throws ApiError
-     */
-    static createClientPaymentMethod(xApiVersion: string, xAccountId: string, requestBody: PaymentMethodAttributes, xIdempotencyKey?: string): CancelablePromise<PaymentMethodResponse>;
-    /**
      * Retrieve a payment method
      * @param xApiVersion
      * @param id

@@ -1,5 +1,5 @@
-import { CustomerAttributes, CustomerResponse, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes } from '../generated';
-export type { CustomerAttributes, CustomerResponse, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes, PaymentMethodResponse, } from '../generated';
+import { CustomerAttributes, CustomerResponse, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes } from '../../../../../generated';
+export type { CustomerAttributes, CustomerResponse, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes, PaymentMethodResponse, } from '../../../../../generated';
 export type CreatePaymentArgs = {
     accountId: string;
     data: {

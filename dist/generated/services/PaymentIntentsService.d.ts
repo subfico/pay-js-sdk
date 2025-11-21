@@ -1,8 +1,8 @@
 import { Meta } from '../models/Meta';
-import { PaymentIntentAddPaymentMethodRequest } from '../models/PaymentIntentAddPaymentMethodRequest';
 import { PaymentIntentCreateRequest } from '../models/PaymentIntentCreateRequest';
 import { PaymentIntentResponse } from '../models/PaymentIntentResponse';
 import { PaymentIntentUpdateRequest } from '../models/PaymentIntentUpdateRequest';
+import { PaymentMethodAttributes } from '../models/PaymentMethodAttributes';
 import { CancelablePromise } from '../core/CancelablePromise';
 export declare class PaymentIntentsService {
     /**
@@ -19,20 +19,11 @@ export declare class PaymentIntentsService {
      * @param xApiVersion
      * @param xAccountId
      * @param id The ID of the payment intent to confirm
+     * @param requestBody
      * @returns PaymentIntentResponse Successful confirmation of payment intent
      * @throws ApiError
      */
-    static confirmClientPaymentIntent(xApiVersion: string, xAccountId: string, id: string): CancelablePromise<PaymentIntentResponse>;
-    /**
-     * Add payment method to a payment intent
-     * @param xApiVersion
-     * @param xAccountId
-     * @param id The ID of the payment intent to add payment method to
-     * @param requestBody
-     * @returns any Successfully added payment method to payment intent
-     * @throws ApiError
-     */
-    static addPaymentMethodToPaymentIntent(xApiVersion: string, xAccountId: string, id: string, requestBody: PaymentIntentAddPaymentMethodRequest): CancelablePromise<any>;
+    static confirmClientPaymentIntent(xApiVersion: string, xAccountId: string, id: string, requestBody: PaymentMethodAttributes): CancelablePromise<PaymentIntentResponse>;
     /**
      * List payment intents
      * @param xApiVersion

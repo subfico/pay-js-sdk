@@ -79,11 +79,6 @@ describe("node SDK", () => {
         token: `${header}.${toBase64(JSON.stringify({ payment_intent_id: "pi_123" }))}.${signature}`,
       };
 
-      const mockPaymentMethod = {
-        id: "pm_123",
-        type: "card",
-      };
-
       const mockPaymentIntent = {
         id: "pi_123",
         amount: 1000,
@@ -100,14 +95,6 @@ describe("node SDK", () => {
           ok: true,
           json: async () => mockTokenResponse,
         }) // Create payment intent
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => mockPaymentMethod,
-        }) // Create payment method
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({}),
-        }) // Add payment method to intent
         .mockResolvedValueOnce({
           ok: true,
           json: async () => mockPaymentIntent,
@@ -134,7 +121,7 @@ describe("node SDK", () => {
       const result = await client.createPayment(args);
 
       expect(result).toEqual(mockPaymentIntent);
-      expect(mockFetch).toHaveBeenCalledTimes(5);
+      expect(mockFetch).toHaveBeenCalledTimes(3);
     });
 
     it("should create payment with existing customer by id", async () => {
@@ -154,11 +141,6 @@ describe("node SDK", () => {
         token: `${header}.${toBase64(JSON.stringify({ payment_intent_id: "pi_123" }))}.${signature}`,
       };
 
-      const mockPaymentMethod = {
-        id: "pm_123",
-        type: "card",
-      };
-
       const mockPaymentIntent = {
         id: "pi_123",
         amount: 1000,
@@ -169,14 +151,6 @@ describe("node SDK", () => {
         .mockResolvedValueOnce({
           ok: true,
           json: async () => mockTokenResponse,
-        })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => mockPaymentMethod,
-        })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({}),
         })
         .mockResolvedValueOnce({
           ok: true,
@@ -201,7 +175,7 @@ describe("node SDK", () => {
       const result = await client.createPayment(args);
 
       expect(result).toEqual(mockPaymentIntent);
-      expect(mockFetch).toHaveBeenCalledTimes(4); // Should skip customer creation
+      expect(mockFetch).toHaveBeenCalledTimes(2); // Should skip customer creation
     });
 
     it("should handle API errors during customer creation", async () => {
@@ -275,7 +249,6 @@ describe("node SDK", () => {
         token: `${header}.${toBase64(JSON.stringify({ payment_intent_id: "pi_123" }))}.${signature}`,
       };
 
-      const mockPaymentMethod = { id: "pm_123", type: "card" };
       const mockPaymentIntent = {
         id: "pi_123",
         amount: 1000,
@@ -303,14 +276,6 @@ describe("node SDK", () => {
         }) // Create payment intent
         .mockResolvedValueOnce({
           ok: true,
-          json: async () => mockPaymentMethod,
-        }) // Create payment method
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({}),
-        }) // Add payment method
-        .mockResolvedValueOnce({
-          ok: true,
           json: async () => mockPaymentIntent,
         }); // Confirm payment intent
 
@@ -335,7 +300,7 @@ describe("node SDK", () => {
       const result = await client.createPayment(args);
 
       expect(result).toEqual(mockPaymentIntent);
-      expect(mockFetch).toHaveBeenCalledTimes(7);
+      expect(mockFetch).toHaveBeenCalledTimes(5);
     });
 
     it("should use production URL when env is production", async () => {
@@ -355,7 +320,6 @@ describe("node SDK", () => {
       const mockTokenResponse = {
         token: `${header}.${toBase64(JSON.stringify({ payment_intent_id: "pi_123" }))}.${signature}`,
       };
-      const mockPaymentMethod = { id: "pm_123", type: "card" };
       const mockPaymentIntent = {
         id: "pi_123",
         amount: 1000,
@@ -371,11 +335,6 @@ describe("node SDK", () => {
           ok: true,
           json: async () => mockTokenResponse,
         })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => mockPaymentMethod,
-        })
-        .mockResolvedValueOnce({ ok: true, json: async () => ({}) })
         .mockResolvedValueOnce({
           ok: true,
           json: async () => mockPaymentIntent,
@@ -418,7 +377,6 @@ describe("node SDK", () => {
       const mockTokenResponse = {
         token: `${header}.${toBase64(JSON.stringify({ payment_intent_id: "pi_123" }))}.${signature}`,
       };
-      const mockPaymentMethod = { id: "pm_123", type: "card" };
       const mockPaymentIntent = {
         id: "pi_123",
         amount: 1000,
@@ -434,11 +392,6 @@ describe("node SDK", () => {
           ok: true,
           json: async () => mockTokenResponse,
         })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => mockPaymentMethod,
-        })
-        .mockResolvedValueOnce({ ok: true, json: async () => ({}) })
         .mockResolvedValueOnce({
           ok: true,
           json: async () => mockPaymentIntent,
