@@ -2,11 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type AccountResponse = {
+import type { Metadata } from './Metadata';
+export type MerchantResponse = {
     id?: string;
-    name?: string;
-    active?: boolean;
-    merchant_id?: string;
+    organization_id?: string;
+    legal_name?: string;
+    dba_name?: string;
+    metadata?: Metadata;
+    state?: string;
     created_at?: string;
     updated_at?: string;
 };

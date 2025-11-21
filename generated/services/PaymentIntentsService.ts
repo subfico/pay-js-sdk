@@ -3,10 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Meta } from '../models/Meta';
-import type { PaymentIntentAddPaymentMethodRequest } from '../models/PaymentIntentAddPaymentMethodRequest';
 import type { PaymentIntentCreateRequest } from '../models/PaymentIntentCreateRequest';
 import type { PaymentIntentResponse } from '../models/PaymentIntentResponse';
 import type { PaymentIntentUpdateRequest } from '../models/PaymentIntentUpdateRequest';
+import type { PaymentMethodAttributes } from '../models/PaymentMethodAttributes';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -41,6 +41,7 @@ export class PaymentIntentsService {
      * @param xApiVersion
      * @param xAccountId
      * @param id The ID of the payment intent to confirm
+     * @param requestBody
      * @returns PaymentIntentResponse Successful confirmation of payment intent
      * @throws ApiError
      */
@@ -48,37 +49,11 @@ export class PaymentIntentsService {
         xApiVersion: string,
         xAccountId: string,
         id: string,
+        requestBody: PaymentMethodAttributes,
     ): CancelablePromise<PaymentIntentResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/embed/payment_intents/{id}/confirm',
-            path: {
-                'id': id,
-            },
-            headers: {
-                'X-Api-Version': xApiVersion,
-                'X-Account-Id': xAccountId,
-            },
-        });
-    }
-    /**
-     * Add payment method to a payment intent
-     * @param xApiVersion
-     * @param xAccountId
-     * @param id The ID of the payment intent to add payment method to
-     * @param requestBody
-     * @returns any Successfully added payment method to payment intent
-     * @throws ApiError
-     */
-    public static addPaymentMethodToPaymentIntent(
-        xApiVersion: string,
-        xAccountId: string,
-        id: string,
-        requestBody: PaymentIntentAddPaymentMethodRequest,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/embed/payment_intents/{id}/add_payment_method',
             path: {
                 'id': id,
             },

@@ -10,33 +10,6 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class PaymentMethodsService {
     /**
-     * Create a payment method
-     * @param xApiVersion
-     * @param xAccountId
-     * @param requestBody
-     * @param xIdempotencyKey
-     * @returns PaymentMethodResponse Payment method created successfully
-     * @throws ApiError
-     */
-    public static createClientPaymentMethod(
-        xApiVersion: string,
-        xAccountId: string,
-        requestBody: PaymentMethodAttributes,
-        xIdempotencyKey?: string,
-    ): CancelablePromise<PaymentMethodResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/embed/payment_methods',
-            headers: {
-                'X-Api-Version': xApiVersion,
-                'X-Account-Id': xAccountId,
-                'X-Idempotency-Key': xIdempotencyKey,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
      * Retrieve a payment method
      * @param xApiVersion
      * @param id
