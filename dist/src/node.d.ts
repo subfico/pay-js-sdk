@@ -1,14 +1,17 @@
-import { CustomerAttributes, CustomerResponse, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes } from '../../../../../generated';
-export type { CustomerAttributes, CustomerResponse, PaymentIntentAttributes, PaymentIntentResponse, PaymentMethodAttributes, PaymentMethodResponse, } from '../../../../../generated';
+import { CustomerAttributes, CustomerResponse, PaymentIntentCreateAttributes, PaymentIntentResponse, PaymentMethodAttributes } from '../../../../../generated';
+export type { CustomerAttributes, CustomerResponse, PaymentIntentCreateAttributes, PaymentIntentResponse, PaymentMethodAttributes, PaymentMethodResponse, } from '../../../../../generated';
 export type CreatePaymentArgs = {
     accountId: string;
     data: {
         customer: CustomerAttributes | {
             id: CustomerResponse["id"];
         };
-        paymentIntent: PaymentIntentAttributes;
+    } & ({
+        paymentIntent: PaymentIntentCreateAttributes & Required<Pick<PaymentIntentCreateAttributes, "payment_method_id">>;
+    } | {
+        paymentIntent: Omit<PaymentIntentCreateAttributes, "payment_method_id">;
         paymentMethod: PaymentMethodAttributes;
-    };
+    });
     headers?: Record<string, string>;
 };
 export declare function createClient({ renderToken, apiKey, }: {

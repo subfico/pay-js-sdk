@@ -182,6 +182,64 @@ async function processPayment(req, res) {
 }
 ```
 
+### New vs Existing Payment Methods
+
+`client.createPayment()` supports two flows:
+
+- **New payment method (from the React iframe)**: Pass `paymentMethod` (attributes) and omit `payment_method_id` from `paymentIntent`.
+- **Existing/saved payment method**: Pass `paymentIntent.payment_method_id` and omit `paymentMethod`.
+
+#### New payment method (default)
+
+```typescript
+const paymentIntent = await client.createPayment({
+  accountId: process.env.SUBFI_ACCOUNT_ID,
+  data: {
+    customer: {
+      email: customerEmail,
+      name: customerName,
+    },
+    paymentIntent: {
+      amount: 5000,
+      capture_method: "automatic",
+    },
+    paymentMethod: {
+      billing_address_attributes: {
+        email: customerEmail,
+        name: customerName,
+      },
+      card_profile_attributes: {
+        encrypted_card_number:
+          request.body.paymentMethod.card_profile_attributes
+            .encrypted_card_number,
+        exp_month: request.body.paymentMethod.card_profile_attributes.exp_month,
+        exp_year: request.body.paymentMethod.card_profile_attributes.exp_year,
+        cvc: request.body.paymentMethod.card_profile_attributes.cvc,
+      },
+    },
+  },
+});
+```
+
+#### Existing/saved payment method
+
+```typescript
+const paymentIntent = await client.createPayment({
+  accountId: process.env.SUBFI_ACCOUNT_ID,
+  data: {
+    // Either use an existing customer...
+    customer: { id: "cus_existing123" },
+    // ...or provide attributes and the SDK will find/create one
+    // customer: { email: "customer@example.com", name: "Jane Doe" },
+    paymentIntent: {
+      amount: 5000,
+      // Saved PaymentMethod id from a prior creation
+      payment_method_id: "pm_12345",
+    },
+  },
+});
+```
+
 ### With Existing Customer
 
 If you already have a customer ID, you can skip customer creation:
@@ -427,15 +485,29 @@ Creates a payment with customer, payment intent, and payment method.
 **Parameters:**
 
 ```typescript
-{
-  accountId: string;
-  data: {
-    customer: CustomerAttributes | { id: string };
-    paymentIntent: PaymentIntentAttributes;
-    paymentMethod: PaymentMethodAttributes;
-  };
-  headers?: Record<string, string>; // Optional custom headers
-}
+type CreatePaymentArgs =
+  | {
+      accountId: string;
+      data: {
+        customer: CustomerAttributes | { id: string };
+        // NEW payment method flow: provide attributes and omit payment_method_id
+        paymentIntent: Omit<PaymentIntentAttributes, "payment_method_id">;
+        paymentMethod: PaymentMethodAttributes;
+      };
+      headers?: Record<string, string>;
+    }
+  | {
+      accountId: string;
+      data: {
+        customer: CustomerAttributes | { id: string };
+        // EXISTING payment method flow: provide payment_method_id and omit paymentMethod
+        paymentIntent: PaymentIntentAttributes & {
+          payment_method_id: string;
+        };
+        // paymentMethod: never;
+      };
+      headers?: Record<string, string>;
+    };
 ```
 
 **CustomerAttributes:**
@@ -458,6 +530,8 @@ Creates a payment with customer, payment intent, and payment method.
   description?: string | null;
   embed?: boolean;
   metadata?: Record<string, any>;
+  // Only for EXISTING payment method flow:
+  // payment_method_id?: string;
 }
 ```
 

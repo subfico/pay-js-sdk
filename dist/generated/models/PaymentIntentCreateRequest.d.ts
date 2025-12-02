@@ -1,4 +1,4 @@
-import { PaymentIntentAttributes } from './PaymentIntentAttributes';
+import { PaymentIntentCreateAttributes } from './PaymentIntentCreateAttributes';
 export type PaymentIntentCreateRequest = {
-    payment_intent?: PaymentIntentAttributes;
+    payment_intent?: PaymentIntentCreateAttributes;
 };

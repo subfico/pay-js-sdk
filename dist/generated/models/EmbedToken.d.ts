@@ -7,4 +7,5 @@ export type EmbedToken = {
     exp?: string;
     account_id?: string;
     payment_intent_id?: string;
+    setup_intent_id?: string;
 };

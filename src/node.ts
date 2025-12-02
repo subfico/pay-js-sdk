@@ -1,9 +1,10 @@
 import type {
   CustomerAttributes,
   CustomerResponse,
-  PaymentIntentAttributes,
+  PaymentIntentCreateAttributes,
   PaymentIntentResponse,
   PaymentMethodAttributes,
+  PaymentMethodResponse,
   RenderToken,
   TokenResponse,
 } from "~/generated";
@@ -11,7 +12,7 @@ import type {
 export type {
   CustomerAttributes,
   CustomerResponse,
-  PaymentIntentAttributes,
+  PaymentIntentCreateAttributes,
   PaymentIntentResponse,
   PaymentMethodAttributes,
   PaymentMethodResponse,
@@ -19,11 +20,16 @@ export type {
 
 export type CreatePaymentArgs = {
   accountId: string;
-  data: {
-    customer: CustomerAttributes | { id: CustomerResponse["id"] };
-    paymentIntent: PaymentIntentAttributes;
-    paymentMethod: PaymentMethodAttributes;
-  };
+  data: { customer: CustomerAttributes | { id: CustomerResponse["id"] } } & (
+    | {
+        paymentIntent: PaymentIntentCreateAttributes &
+          Required<Pick<PaymentIntentCreateAttributes, "payment_method_id">>;
+      }
+    | {
+        paymentIntent: Omit<PaymentIntentCreateAttributes, "payment_method_id">;
+        paymentMethod: PaymentMethodAttributes;
+      }
+  );
   headers?: Record<string, string>;
 };
 
@@ -72,10 +78,17 @@ export function createClient({
     return await confirmPaymentIntent({
       token,
       paymentIntentId,
-      paymentMethod: {
-        ...data.paymentMethod,
-        ...(customer?.id && { customer_id: customer.id }),
-      },
+
+      ...("paymentMethod" in data
+        ? {
+            paymentMethod: {
+              ...data.paymentMethod,
+              ...(customer?.id && { customer_id: customer.id }),
+            },
+          }
+        : {
+            paymentMethod: { id: data.paymentIntent.payment_method_id },
+          }),
       headers,
       env,
     });
@@ -98,7 +111,11 @@ async function findOrCreateCustomer({
   env: RenderToken["env"];
 }): Promise<CustomerResponse> {
   const response = await fetch(
-    `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers`,
+    `${
+      env === "production"
+        ? "https://pay.subfi.com"
+        : "https://pay-sandbox.subfi.com"
+    }/customers`,
     {
       method: "POST",
       headers: {
@@ -110,7 +127,7 @@ async function findOrCreateCustomer({
       body: JSON.stringify({
         customer: requestBody,
       }),
-    },
+    }
   );
 
   if (response.ok) {
@@ -119,7 +136,11 @@ async function findOrCreateCustomer({
 
   if (response.status === 422 && requestBody?.email) {
     const response = await fetch(
-      `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers?email=${requestBody.email}`,
+      `${
+        env === "production"
+          ? "https://pay.subfi.com"
+          : "https://pay-sandbox.subfi.com"
+      }/customers?email=${requestBody.email}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +148,7 @@ async function findOrCreateCustomer({
           ...(!headers?.Authorization && { "X-Api-Key": apiKey }),
           ...headers,
         },
-      },
+      }
     );
 
     if (response.ok) {
@@ -139,7 +160,11 @@ async function findOrCreateCustomer({
         Object.keys(requestBody.metadata).length > 0
       ) {
         const response = await fetch(
-          `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/customers/${existingCustomer.id}`,
+          `${
+            env === "production"
+              ? "https://pay.subfi.com"
+              : "https://pay-sandbox.subfi.com"
+          }/customers/${existingCustomer.id}`,
           {
             method: "PATCH",
             headers: {
@@ -156,7 +181,7 @@ async function findOrCreateCustomer({
                 },
               },
             }),
-          },
+          }
         );
 
         if (response.ok) {
@@ -183,7 +208,7 @@ async function createPaymentIntent({
   renderToken,
   env,
 }: {
-  requestBody: PaymentIntentAttributes;
+  requestBody: PaymentIntentCreateAttributes;
   headers?: Record<string, string> & { Authorization?: string };
   apiKey: string;
   accountId: string;
@@ -191,7 +216,11 @@ async function createPaymentIntent({
   env: RenderToken["env"];
 }): Promise<TokenResponse> {
   const response = await fetch(
-    `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/payment_intents`,
+    `${
+      env === "production"
+        ? "https://pay.subfi.com"
+        : "https://pay-sandbox.subfi.com"
+    }/payment_intents`,
     {
       method: "POST",
       headers: {
@@ -205,7 +234,7 @@ async function createPaymentIntent({
       body: JSON.stringify({
         payment_intent: requestBody,
       }),
-    },
+    }
   );
 
   if (response.ok) {
@@ -224,7 +253,7 @@ async function confirmPaymentIntent({
 }: {
   token: string | undefined;
   paymentIntentId: string | undefined;
-  paymentMethod: PaymentMethodAttributes
+  paymentMethod?: PaymentMethodAttributes | Pick<PaymentMethodResponse, "id">;
   headers?: Record<string, string>;
   env: RenderToken["env"];
 }): Promise<PaymentIntentResponse> {
@@ -232,7 +261,11 @@ async function confirmPaymentIntent({
   const { Authorization, ...remainingHeaders } = headers ?? {};
 
   const response = await fetch(
-    `${env === "production" ? "https://pay.subfi.com" : "https://pay-sandbox.subfi.com"}/embed/payment_intents/${paymentIntentId}/confirm`,
+    `${
+      env === "production"
+        ? "https://pay.subfi.com"
+        : "https://pay-sandbox.subfi.com"
+    }/embed/payment_intents/${paymentIntentId}/confirm`,
     {
       method: "POST",
       headers: {
@@ -243,10 +276,12 @@ async function confirmPaymentIntent({
       },
       body: JSON.stringify({
         payment_intent: {
-          payment_method: paymentMethod,
+          ...(paymentMethod && "id" in paymentMethod
+            ? { payment_method_id: paymentMethod.id }
+            : { payment_method: paymentMethod }),
         },
       }),
-    },
+    }
   );
 
   if (response.ok) {

@@ -1,6 +1,6 @@
 {
   "name": "@subfico/pay-js-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/node.js",
   "module": "dist/node.mjs",
   "types": "dist/node.d.ts",

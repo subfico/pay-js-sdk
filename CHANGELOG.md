@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2 - 2025-12-02
+
+### Changed
+
+- `createPayment` now handles existing payment methods (see updated README)
+
 ## 1.0.1 - 2025-11-21
 
 ### Changed

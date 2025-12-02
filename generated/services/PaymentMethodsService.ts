@@ -10,28 +10,6 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class PaymentMethodsService {
     /**
-     * Retrieve a payment method
-     * @param xApiVersion
-     * @param id
-     * @returns PaymentMethodResponse A single payment method
-     * @throws ApiError
-     */
-    public static getClientPaymentMethod(
-        xApiVersion: string,
-        id: string,
-    ): CancelablePromise<PaymentMethodResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/embed/payment_methods/{id}',
-            path: {
-                'id': id,
-            },
-            headers: {
-                'X-Api-Version': xApiVersion,
-            },
-        });
-    }
-    /**
      * List all payment methods
      * @param xApiVersion
      * @param customerId The ID of the customer to filter by

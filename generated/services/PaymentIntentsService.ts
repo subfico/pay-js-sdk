@@ -3,10 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Meta } from '../models/Meta';
+import type { PaymentIntentConfirmRequest } from '../models/PaymentIntentConfirmRequest';
 import type { PaymentIntentCreateRequest } from '../models/PaymentIntentCreateRequest';
 import type { PaymentIntentResponse } from '../models/PaymentIntentResponse';
 import type { PaymentIntentUpdateRequest } from '../models/PaymentIntentUpdateRequest';
-import type { PaymentMethodAttributes } from '../models/PaymentMethodAttributes';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -19,7 +19,7 @@ export class PaymentIntentsService {
      * @returns PaymentIntentResponse Successful retrieval of payment intent
      * @throws ApiError
      */
-    public static getClientPaymentIntent(
+    public static getEmbedPaymentIntent(
         xApiVersion: string,
         xAccountId: string,
         id: string,
@@ -45,11 +45,11 @@ export class PaymentIntentsService {
      * @returns PaymentIntentResponse Successful confirmation of payment intent
      * @throws ApiError
      */
-    public static confirmClientPaymentIntent(
+    public static confirmEmbedPaymentIntent(
         xApiVersion: string,
         xAccountId: string,
         id: string,
-        requestBody: PaymentMethodAttributes,
+        requestBody: PaymentIntentConfirmRequest,
     ): CancelablePromise<PaymentIntentResponse> {
         return __request(OpenAPI, {
             method: 'POST',

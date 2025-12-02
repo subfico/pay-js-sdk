@@ -4,14 +4,6 @@ import { PaymentMethodResponse } from '../models/PaymentMethodResponse';
 import { CancelablePromise } from '../core/CancelablePromise';
 export declare class PaymentMethodsService {
     /**
-     * Retrieve a payment method
-     * @param xApiVersion
-     * @param id
-     * @returns PaymentMethodResponse A single payment method
-     * @throws ApiError
-     */
-    static getClientPaymentMethod(xApiVersion: string, id: string): CancelablePromise<PaymentMethodResponse>;
-    /**
      * List all payment methods
      * @param xApiVersion
      * @param customerId The ID of the customer to filter by

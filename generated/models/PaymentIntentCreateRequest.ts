@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PaymentIntentAttributes } from './PaymentIntentAttributes';
+import type { PaymentIntentCreateAttributes } from './PaymentIntentCreateAttributes';
 export type PaymentIntentCreateRequest = {
-    payment_intent?: PaymentIntentAttributes;
+    payment_intent?: PaymentIntentCreateAttributes;
 };
 
