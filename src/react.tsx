@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
+import GooglePayButton from "@google-pay/button-react";
 import type { PaymentMethodAttributes } from "~/generated";
 
 export type Message =
   | {
-      type: "UPDATE_HEIGHT";
-      height: string;
-    }
+    type: "UPDATE_HEIGHT";
+    height: string;
+  }
   | {
-      type: "GENERATE_ENCRYPTED_PAYMENT_METHOD";
-      paymentMethod?: PaymentMethodAttributes;
-    };
+    type: "GENERATE_ENCRYPTED_PAYMENT_METHOD";
+    paymentMethod?: PaymentMethodAttributes;
+  };
 
 /**
  * Create a message object for communication with the SubFi iframe
@@ -31,7 +32,7 @@ export function generateEncryptedPaymentMethod({
     createMessage({
       type: "GENERATE_ENCRYPTED_PAYMENT_METHOD",
     }),
-    "*",
+    "*"
   );
 }
 
@@ -147,6 +148,87 @@ export function SubFiBankAccountPaymentMethodForm({
         height,
       }}
       scrolling="no"
+    />
+  );
+}
+
+export function SubFiGooglePayPaymentMethodForm({
+  onEncryptedPaymentMethodGenerated,
+  ...props
+}: {
+  onEncryptedPaymentMethodGenerated: ({
+    paymentMethod,
+  }: {
+    paymentMethod: PaymentMethodAttributes;
+  }) => void;
+} & Omit<React.ComponentProps<typeof GooglePayButton>, "paymentRequest"> & {
+  merchantInfo: google.payments.api.MerchantInfo;
+  transactionInfo: google.payments.api.TransactionInfo;
+}) {
+  return (
+    <GooglePayButton
+      paymentRequest={{
+        emailRequired: true,
+        allowedPaymentMethods: [
+          {
+            parameters: {
+              allowedAuthMethods: ["CRYPTOGRAM_3DS", "PAN_ONLY"],
+              allowedCardNetworks: ["AMEX", "DISCOVER", "MASTERCARD", "VISA"],
+              billingAddressRequired: true,
+              billingAddressParameters: {
+                format: "FULL",
+                phoneNumberRequired: false,
+              },
+              cvcRequired: false,
+            },
+            tokenizationSpecification: {
+              parameters: {
+                gateway: "anedot",
+                gatewayMerchantId: "anedot",
+              },
+              type: "PAYMENT_GATEWAY",
+            },
+            type: "CARD",
+          },
+        ],
+        apiVersion: 2,
+        apiVersionMinor: 0,
+        merchantInfo: props.merchantInfo,
+        transactionInfo: props.transactionInfo,
+      }}
+      onLoadPaymentData={(paymentData) => {
+        onEncryptedPaymentMethodGenerated({
+          paymentMethod: {
+            billing_address_attributes: {
+              name: paymentData.paymentMethodData.info?.billingAddress?.name,
+              address_line1:
+                paymentData.paymentMethodData.info?.billingAddress?.address1,
+              address_line2:
+                paymentData.paymentMethodData.info?.billingAddress?.address2,
+              city: paymentData.paymentMethodData.info?.billingAddress
+                ?.locality,
+              state:
+                paymentData.paymentMethodData.info?.billingAddress
+                  ?.administrativeArea,
+              postal_code:
+                paymentData.paymentMethodData.info?.billingAddress?.postalCode,
+              country:
+                paymentData.paymentMethodData.info?.billingAddress?.countryCode,
+              email: paymentData.email,
+              phone:
+                paymentData.paymentMethodData.info?.billingAddress?.phoneNumber,
+            },
+            card_profile_attributes: {
+              wallet_provider: "googlepay",
+              wallet_payload:
+                paymentData.paymentMethodData.tokenizationData.token,
+              last_four: paymentData.paymentMethodData.info?.cardDetails,
+              brand: paymentData.paymentMethodData.info?.cardNetwork,
+            },
+          },
+        });
+      }}
+      {...props}
     />
   );
 }

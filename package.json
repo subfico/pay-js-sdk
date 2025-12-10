@@ -1,6 +1,6 @@
 {
   "name": "@subfico/pay-js-sdk",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": "dist/node.js",
   "module": "dist/node.mjs",
   "types": "dist/node.d.ts",
@@ -27,6 +27,7 @@
   "description": "Subfi Pay JavaScript SDK",
   "devDependencies": {
     "@biomejs/biome": "2.3.4",
+    "@google-pay/button-react": "^3.2.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -36,6 +37,7 @@
     "@vitest/browser-playwright": "^4.0.7",
     "@vitest/coverage-v8": "^4.0.7",
     "@vitest/ui": "^4.0.7",
+    "openapi-typescript-codegen": "^0.29.0",
     "playwright": "^1.56.1",
     "vite": "^7.2.1",
     "vite-plugin-dts": "^4.5.4",
@@ -43,8 +45,5 @@
   },
   "peerDependencies": {
     "react": "^17 || ^18 || ^19"
-  },
-  "dependencies": {
-    "openapi-typescript-codegen": "^0.29.0"
   }
 }
