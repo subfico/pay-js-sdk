@@ -1,5 +1,5 @@
-import { CustomerAttributes, CustomerResponse, PaymentIntentCreateAttributes, PaymentIntentResponse, PaymentMethodAttributes } from '../../../../../generated';
-export type { CustomerAttributes, CustomerResponse, PaymentIntentCreateAttributes, PaymentIntentResponse, PaymentMethodAttributes, PaymentMethodResponse, } from '../../../../../generated';
+import { CustomerAttributes, CustomerResponse, PaymentIntentCreateAttributes, PaymentIntentResponse, PaymentMethodAttributes, PaymentMethodResponse } from '../generated';
+export type { CustomerAttributes, CustomerResponse, PaymentIntentCreateAttributes, PaymentIntentResponse, PaymentMethodAttributes, PaymentMethodResponse, } from '../generated';
 export type CreatePaymentArgs = {
     accountId: string;
     data: {
@@ -10,7 +10,7 @@ export type CreatePaymentArgs = {
         paymentIntent: PaymentIntentCreateAttributes & Required<Pick<PaymentIntentCreateAttributes, "payment_method_id">>;
     } | {
         paymentIntent: Omit<PaymentIntentCreateAttributes, "payment_method_id">;
-        paymentMethod: PaymentMethodAttributes;
+        paymentMethod: PaymentMethodAttributes | Pick<PaymentMethodResponse, "id">;
     });
     headers?: Record<string, string>;
 };

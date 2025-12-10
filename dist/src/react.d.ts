@@ -1,4 +1,5 @@
-import { PaymentMethodAttributes } from '../../../../../generated';
+import { default as GooglePayButton } from '@google-pay/button-react';
+import { PaymentMethodAttributes } from '../generated';
 export type Message = {
     type: "UPDATE_HEIGHT";
     height: string;
@@ -31,3 +32,16 @@ export declare function SubFiBankAccountPaymentMethodForm({ ref, renderToken, on
     }) => void;
     origin: string;
 }): import("react/jsx-runtime").JSX.Element;
+export type Props = {
+    onEncryptedPaymentMethodGenerated: ({ paymentMethod, shippingAddress, email, }: {
+        paymentMethod: PaymentMethodAttributes;
+        shippingAddress: google.payments.api.PaymentData["shippingAddress"];
+        email: google.payments.api.PaymentData["email"];
+    }) => void;
+} & Omit<React.ComponentProps<typeof GooglePayButton>, "paymentRequest" | "onLoadPaymentData"> & {
+    merchantInfo: google.payments.api.MerchantInfo;
+    transactionInfo: google.payments.api.TransactionInfo;
+} & {
+    ref?: React.RefObject<GooglePayButton | null>;
+};
+export declare function SubFiGooglePayPaymentMethod({ onEncryptedPaymentMethodGenerated, ...props }: Props): import("react/jsx-runtime").JSX.Element;

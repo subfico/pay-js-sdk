@@ -7,7 +7,7 @@ import type {
   PaymentMethodResponse,
   RenderToken,
   TokenResponse,
-} from "~/generated";
+} from "../generated";
 
 export type {
   CustomerAttributes,
@@ -16,7 +16,7 @@ export type {
   PaymentIntentResponse,
   PaymentMethodAttributes,
   PaymentMethodResponse,
-} from "~/generated";
+} from "../generated";
 
 export type CreatePaymentArgs = {
   accountId: string;
@@ -27,7 +27,7 @@ export type CreatePaymentArgs = {
       }
     | {
         paymentIntent: Omit<PaymentIntentCreateAttributes, "payment_method_id">;
-        paymentMethod: PaymentMethodAttributes;
+        paymentMethod: PaymentMethodAttributes | Pick<PaymentMethodResponse, "id">;
       }
   );
   headers?: Record<string, string>;

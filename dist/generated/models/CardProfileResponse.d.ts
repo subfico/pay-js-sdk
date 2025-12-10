@@ -12,6 +12,7 @@ export type CardProfileResponse = {
     state?: string;
     three_d_secure_supported?: boolean | null;
     token?: string;
+    wallet_provider?: string;
     created_at?: string;
     updated_at?: string;
 };

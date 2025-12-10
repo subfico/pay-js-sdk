@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 - 2025-12-09
+
+- Added Google Pay support
+
 ## 1.0.2 - 2025-12-02
 
 ### Changed

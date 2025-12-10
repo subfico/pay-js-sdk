@@ -54,11 +54,6 @@ export default defineConfig({
       ],
     },
   },
-  resolve: {
-    alias: {
-      "~": "/",
-    },
-  },
   optimizeDeps: {
     include: ["@testing-library/user-event"],
   },

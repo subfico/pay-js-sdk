@@ -1,6 +1,6 @@
 {
   "name": "@subfico/pay-js-sdk",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": "dist/node.js",
   "module": "dist/node.mjs",
   "types": "dist/node.d.ts",
@@ -36,15 +36,16 @@
     "@vitest/browser-playwright": "^4.0.7",
     "@vitest/coverage-v8": "^4.0.7",
     "@vitest/ui": "^4.0.7",
+    "openapi-typescript-codegen": "^0.29.0",
     "playwright": "^1.56.1",
     "vite": "^7.2.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.7"
   },
+  "dependencies": {
+    "@google-pay/button-react": "^3.2.1"
+  },
   "peerDependencies": {
     "react": "^17 || ^18 || ^19"
-  },
-  "dependencies": {
-    "openapi-typescript-codegen": "^0.29.0"
   }
 }

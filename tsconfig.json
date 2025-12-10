@@ -11,9 +11,6 @@
     "jsx": "react-jsx",
     "rootDirs": ["."],
     "baseUrl": ".",
-    "paths": {
-      "~/*": ["./*"]
-    },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
