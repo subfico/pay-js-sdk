@@ -32,11 +32,14 @@ export declare function SubFiBankAccountPaymentMethodForm({ ref, renderToken, on
     }) => void;
     origin: string;
 }): import("react/jsx-runtime").JSX.Element;
-export declare function SubFiGooglePayPaymentMethodForm({ onEncryptedPaymentMethodGenerated, ...props }: {
+export type Props = {
     onEncryptedPaymentMethodGenerated: ({ paymentMethod, }: {
         paymentMethod: PaymentMethodAttributes;
     }) => void;
-} & Omit<React.ComponentProps<typeof GooglePayButton>, "paymentRequest"> & {
+} & Omit<React.ComponentProps<typeof GooglePayButton>, "paymentRequest" | "onLoadPaymentData"> & {
     merchantInfo: google.payments.api.MerchantInfo;
     transactionInfo: google.payments.api.TransactionInfo;
-}): import("react/jsx-runtime").JSX.Element;
+} & {
+    ref?: React.RefObject<GooglePayButton | null>;
+};
+export declare function SubFiGooglePayPaymentMethodForm({ onEncryptedPaymentMethodGenerated, ...props }: Props): import("react/jsx-runtime").JSX.Element;

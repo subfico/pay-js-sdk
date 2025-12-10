@@ -152,19 +152,23 @@ export function SubFiBankAccountPaymentMethodForm({
   );
 }
 
-export function SubFiGooglePayPaymentMethodForm({
-  onEncryptedPaymentMethodGenerated,
-  ...props
-}: {
+export type Props = {
   onEncryptedPaymentMethodGenerated: ({
     paymentMethod,
   }: {
     paymentMethod: PaymentMethodAttributes;
   }) => void;
-} & Omit<React.ComponentProps<typeof GooglePayButton>, "paymentRequest"> & {
+} & Omit<React.ComponentProps<typeof GooglePayButton>, "paymentRequest" | "onLoadPaymentData"> & {
   merchantInfo: google.payments.api.MerchantInfo;
   transactionInfo: google.payments.api.TransactionInfo;
-}) {
+} & {
+  ref?: React.RefObject<GooglePayButton | null>;
+}
+
+export function SubFiGooglePayPaymentMethodForm({
+  onEncryptedPaymentMethodGenerated,
+  ...props
+}: Props) {
   return (
     <GooglePayButton
       paymentRequest={{
@@ -191,10 +195,12 @@ export function SubFiGooglePayPaymentMethodForm({
             type: "CARD",
           },
         ],
+        callbackIntents: ["PAYMENT_AUTHORIZATION", "SHIPPING_ADDRESS"],
         apiVersion: 2,
         apiVersionMinor: 0,
         merchantInfo: props.merchantInfo,
         transactionInfo: props.transactionInfo,
+        shippingAddressRequired: true,
       }}
       onLoadPaymentData={(paymentData) => {
         onEncryptedPaymentMethodGenerated({

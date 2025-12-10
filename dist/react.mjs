@@ -1,11 +1,11 @@
 var de = Object.defineProperty;
 var i = (u, t) => de(u, "name", { value: t, configurable: !0 });
 import T, { useState as X, useEffect as Z } from "react";
-var P = { exports: {} }, v = {};
-var W;
+var P = { exports: {} }, g = {};
+var H;
 function fe() {
-  if (W) return v;
-  W = 1;
+  if (H) return g;
+  H = 1;
   var u = Symbol.for("react.transitional.element"), t = Symbol.for("react.fragment");
   function n(r, l, o) {
     var a = null;
@@ -22,20 +22,20 @@ function fe() {
       props: o
     };
   }
-  return i(n, "jsxProd"), v.Fragment = t, v.jsx = n, v.jsxs = n, v;
+  return i(n, "jsxProd"), g.Fragment = t, g.jsx = n, g.jsxs = n, g;
 }
 i(fe, "requireReactJsxRuntime_production");
-var g = {};
-var H;
+var v = {};
+var W;
 function me() {
-  return H || (H = 1, process.env.NODE_ENV !== "production" && (function() {
+  return W || (W = 1, process.env.NODE_ENV !== "production" && (function() {
     function u(e) {
       if (e == null) return null;
       if (typeof e == "function")
         return e.$$typeof === le ? null : e.displayName || e.name || null;
       if (typeof e == "string") return e;
       switch (e) {
-        case M:
+        case A:
           return "Fragment";
         case ee:
           return "Profiler";
@@ -63,7 +63,7 @@ function me() {
             return e = e.displayName, e || (e = s.displayName || s.name || "", e = e !== "" ? "ForwardRef(" + e + ")" : "ForwardRef"), e;
           case ie:
             return s = e.displayName || null, s !== null ? s : u(e.type) || "Memo";
-          case A:
+          case M:
             s = e._payload, e = e._init;
             try {
               return u(e(s));
@@ -96,8 +96,8 @@ function me() {
     }
     i(n, "checkKeyStringCoercion");
     function r(e) {
-      if (e === M) return "<>";
-      if (typeof e == "object" && e !== null && e.$$typeof === A)
+      if (e === A) return "<>";
+      if (typeof e == "object" && e !== null && e.$$typeof === M)
         return "<...>";
       try {
         var s = u(e);
@@ -108,7 +108,7 @@ function me() {
     }
     i(r, "getTaskName");
     function l() {
-      var e = C.A;
+      var e = S.A;
       return e === null ? null : e.getOwner();
     }
     i(l, "getOwner");
@@ -228,14 +228,14 @@ React keys must be passed directly to JSX without using spread:
     }
     i(h, "jsxDEVImpl");
     function p(e) {
-      q(e) ? e._store && (e._store.validated = 1) : typeof e == "object" && e !== null && e.$$typeof === A && (e._payload.status === "fulfilled" ? q(e._payload.value) && e._payload.value._store && (e._payload.value._store.validated = 1) : e._store && (e._store.validated = 1));
+      q(e) ? e._store && (e._store.validated = 1) : typeof e == "object" && e !== null && e.$$typeof === M && (e._payload.status === "fulfilled" ? q(e._payload.value) && e._payload.value._store && (e._payload.value._store.validated = 1) : e._store && (e._store.validated = 1));
     }
     i(p, "validateChildKeys");
     function q(e) {
       return typeof e == "object" && e !== null && e.$$typeof === Y;
     }
     i(q, "isValidElement");
-    var R = T, Y = Symbol.for("react.transitional.element"), Q = Symbol.for("react.portal"), M = Symbol.for("react.fragment"), K = Symbol.for("react.strict_mode"), ee = Symbol.for("react.profiler"), te = Symbol.for("react.consumer"), ne = Symbol.for("react.context"), re = Symbol.for("react.forward_ref"), oe = Symbol.for("react.suspense"), ae = Symbol.for("react.suspense_list"), ie = Symbol.for("react.memo"), A = Symbol.for("react.lazy"), se = Symbol.for("react.activity"), le = Symbol.for("react.client.reference"), C = R.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, V = Object.prototype.hasOwnProperty, ce = Array.isArray, S = console.createTask ? console.createTask : function() {
+    var R = T, Y = Symbol.for("react.transitional.element"), Q = Symbol.for("react.portal"), A = Symbol.for("react.fragment"), K = Symbol.for("react.strict_mode"), ee = Symbol.for("react.profiler"), te = Symbol.for("react.consumer"), ne = Symbol.for("react.context"), re = Symbol.for("react.forward_ref"), oe = Symbol.for("react.suspense"), ae = Symbol.for("react.suspense_list"), ie = Symbol.for("react.memo"), M = Symbol.for("react.lazy"), se = Symbol.for("react.activity"), le = Symbol.for("react.client.reference"), S = R.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, V = Object.prototype.hasOwnProperty, ce = Array.isArray, C = console.createTask ? console.createTask : function() {
       return null;
     };
     R = {
@@ -246,29 +246,29 @@ React keys must be passed directly to JSX without using spread:
     var $, F = {}, z = R.react_stack_bottom_frame.bind(
       R,
       o
-    )(), U = S(r(o)), G = {};
-    g.Fragment = M, g.jsx = function(e, s, d) {
-      var f = 1e4 > C.recentlyCreatedOwnerStacks++;
+    )(), U = C(r(o)), G = {};
+    v.Fragment = A, v.jsx = function(e, s, d) {
+      var f = 1e4 > S.recentlyCreatedOwnerStacks++;
       return h(
         e,
         s,
         d,
         !1,
         f ? Error("react-stack-top-frame") : z,
-        f ? S(r(e)) : U
+        f ? C(r(e)) : U
       );
-    }, g.jsxs = function(e, s, d) {
-      var f = 1e4 > C.recentlyCreatedOwnerStacks++;
+    }, v.jsxs = function(e, s, d) {
+      var f = 1e4 > S.recentlyCreatedOwnerStacks++;
       return h(
         e,
         s,
         d,
         !0,
         f ? Error("react-stack-top-frame") : z,
-        f ? S(r(e)) : U
+        f ? C(r(e)) : U
       );
     };
-  })()), g;
+  })()), v;
 }
 i(me, "requireReactJsxRuntime_development");
 var J;
@@ -558,10 +558,10 @@ const B = "google-pay-button-container", L = class L extends T.Component {
 };
 i(L, "GooglePayButton");
 let x = L;
-function ge(u) {
+function ve(u) {
   return u;
 }
-i(ge, "createMessage");
+i(ve, "createMessage");
 function Re({
   iframeRef: u
 }) {
@@ -688,10 +688,12 @@ function Te({
             type: "CARD"
           }
         ],
+        callbackIntents: ["PAYMENT_AUTHORIZATION", "SHIPPING_ADDRESS"],
         apiVersion: 2,
         apiVersionMinor: 0,
         merchantInfo: t.merchantInfo,
-        transactionInfo: t.transactionInfo
+        transactionInfo: t.transactionInfo,
+        shippingAddressRequired: !0
       },
       onLoadPaymentData: /* @__PURE__ */ i((n) => {
         u({
@@ -725,6 +727,6 @@ export {
   Pe as SubFiBankAccountPaymentMethodForm,
   _e as SubFiCreditCardPaymentMethodForm,
   Te as SubFiGooglePayPaymentMethodForm,
-  ge as createMessage,
+  ve as createMessage,
   Re as generateEncryptedPaymentMethod
 };
