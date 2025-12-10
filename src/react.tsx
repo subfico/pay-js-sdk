@@ -162,7 +162,7 @@ export type Props = {
   merchantInfo: google.payments.api.MerchantInfo;
   transactionInfo: google.payments.api.TransactionInfo;
 } & {
-  ref?: React.RefObject<GooglePayButton>;
+  ref?: React.RefObject<GooglePayButton | null>;
 }
 
 export function SubFiGooglePayPaymentMethodForm({
