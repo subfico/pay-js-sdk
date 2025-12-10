@@ -40,6 +40,6 @@ export type Props = {
     merchantInfo: google.payments.api.MerchantInfo;
     transactionInfo: google.payments.api.TransactionInfo;
 } & {
-    ref?: React.RefObject<GooglePayButton>;
+    ref?: React.RefObject<GooglePayButton | null>;
 };
 export declare function SubFiGooglePayPaymentMethodForm({ onEncryptedPaymentMethodGenerated, ...props }: Props): import("react/jsx-runtime").JSX.Element;
